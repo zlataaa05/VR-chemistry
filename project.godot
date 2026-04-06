@@ -11,13 +11,26 @@ config_version=5
 [application]
 
 config/name="DIPLOM"
+run/main_scene="uid://1y6hxp66b2as"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+XrSimulator="*uid://ctltchlf2j2r4"
+RumbleManager="*uid://bvoylp5ljwfw4"
+UserSettings="*uid://ckuyhx8wab8om"
+XRToolsUserSettings="*uid://ckuyhx8wab8om"
+XRToolsRumbleManager="*uid://bvoylp5ljwfw4"
 
 [editor]
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
 
 [physics]
 
@@ -26,3 +39,8 @@ version_control/autoload_on_startup=true
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+
+[xr]
+
+openxr/enabled=true
+shaders/enabled=true

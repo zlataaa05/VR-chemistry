@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://83hv132nxi5w"]
+
+[ext_resource type="PackedScene" uid="uid://btknduttnmoxf" path="res://addons/godot-xr-tools/misc/vr_common_shader_cache.tscn" id="1_x3g1t"]
+[ext_resource type="PackedScene" uid="uid://njx823gyk04n" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_hand.tscn" id="3_xi7vv"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="4_uud0d"]
+[ext_resource type="Material" uid="uid://dyuaw57o8y3i" path="res://addons/godot-xr-tools/materials/highlight.tres" id="4_xi7vv"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="5_73ffy"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="6_vk6i0"]
+[ext_resource type="PackedScene" uid="uid://raeeicvvindd" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_hand.tscn" id="8_yqncw"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="9_f36ai"]
+
+[sub_resource type="GDScript" id="GDScript_pe3wl"]
+script/source = "# player.gd или как называется скрипт игрока
+extends Node3D
+"
+
+[sub_resource type="GDScript" id="GDScript_gr858"]
+script/source = "extends XRCamera3D
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gkq6t"]
+size = Vector3(0.07471466, 0.14196777, 0.19903564)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2xrox"]
+size = Vector3(0.07470703, 0.14202881, 0.19848633)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5qx4t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x3g1t"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dwsyw"]
+material = SubResource("StandardMaterial3D_x3g1t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gk14i"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0285v"]
+material = SubResource("StandardMaterial3D_gk14i")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v70ed"]
+
+[node name="Player" type="Node3D" unique_id=1355984825]
+script = SubResource("GDScript_pe3wl")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1468837433]
+
+[node name="Camera1" type="XRCamera3D" parent="XROrigin3D" unique_id=1045648068]
+transform = Transform3D(1, 0, 0, 0, 0.9778454, 0.20932841, 0, -0.20932841, 0.9778454, 0, 0.96739674, 0)
+cull_mask = 524287
+current = true
+fov = 78.0094
+script = SubResource("GDScript_gr858")
+
+[node name="VRCommonShaderCache" parent="XROrigin3D/Camera1" unique_id=306441553 instance=ExtResource("1_x3g1t")]
+
+[node name="XRController3D_left" type="XRController3D" parent="XROrigin3D" unique_id=187378927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.74563575)
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="XROrigin3D/XRController3D_left" unique_id=677028907 instance=ExtResource("3_xi7vv")]
+transform = Transform3D(2.1960714, 0, 0, 0, 2.2536275, 0, 0, 0, 2.0892534, 0, 0, -0.1695087)
+hand_material_override = ExtResource("4_xi7vv")
+
+[node name="AreaLeftHand" type="Area3D" parent="XROrigin3D/XRController3D_left/LeftHand" unique_id=1295511854]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/XRController3D_left/LeftHand/AreaLeftHand" unique_id=1149527261]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.019977577, -0.041198734, 0.07913202)
+shape = SubResource("BoxShape3D_gkq6t")
+
+[node name="MovementDirect" parent="XROrigin3D/XRController3D_left" unique_id=1236333118 instance=ExtResource("4_uud0d")]
+
+[node name="FunctionPickup" parent="XROrigin3D/XRController3D_left" unique_id=1801355277 instance=ExtResource("5_73ffy")]
+ranged_collision_mask = 65540
+
+[node name="XRController3D_right" type="XRController3D" parent="XROrigin3D" unique_id=1444017431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.74563575)
+tracker = &"right_hand"
+
+[node name="RightHand" parent="XROrigin3D/XRController3D_right" unique_id=2001910975 instance=ExtResource("8_yqncw")]
+transform = Transform3D(2.1960714, 0, 0, 0, 2.2536275, 0, 0, 0, 2.0892534, 0, 0, -0.1695087)
+hand_material_override = ExtResource("4_xi7vv")
+
+[node name="AreaRightHand" type="Area3D" parent="XROrigin3D/XRController3D_right/RightHand" unique_id=421689334]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/XRController3D_right/RightHand/AreaRightHand" unique_id=81356827]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.018798832, -0.03890991, 0.07922351)
+shape = SubResource("BoxShape3D_2xrox")
+
+[node name="MovementDirect" parent="XROrigin3D/XRController3D_right" unique_id=971171182 instance=ExtResource("4_uud0d")]
+
+[node name="FunctionPickup" parent="XROrigin3D/XRController3D_right" unique_id=90128681 instance=ExtResource("5_73ffy")]
+
+[node name="MovementTurn" parent="XROrigin3D/XRController3D_right" unique_id=1960105614 instance=ExtResource("9_f36ai")]
+turn_mode = 2
+
+[node name="PlayerBody" parent="XROrigin3D" unique_id=720517297 instance=ExtResource("6_vk6i0")]
+collision_layer = 524296
+
+[node name="Body" type="MeshInstance3D" parent="XROrigin3D" unique_id=1655242017]
+layers = 524288
+mesh = SubResource("CapsuleMesh_5qx4t")
+skeleton = NodePath("../..")
+
+[node name="Eye_right" type="MeshInstance3D" parent="XROrigin3D/Body" unique_id=341274693]
+transform = Transform3D(0.19334126, 0, 0, 0, 0.19194442, 0, 0, 0, 0.20051771, 0.19645241, 0.4507441, -0.38610464)
+layers = 524288
+mesh = SubResource("SphereMesh_dwsyw")
+
+[node name="Eye_left" type="MeshInstance3D" parent="XROrigin3D/Body" unique_id=1388689970]
+transform = Transform3D(0.19334126, 0, 0, 0, 0.19194442, 0, 0, 0, 0.20051771, -0.196, 0.451, -0.386)
+layers = 524288
+mesh = SubResource("SphereMesh_dwsyw")
+
+[node name="Belt" type="MeshInstance3D" parent="XROrigin3D" unique_id=929854522]
+transform = Transform3D(1.0530939, 0, 0, 0, 0.1066457, 0, 0, 0, 1.0757967, 0, -0.067105174, 0)
+layers = 524288
+mesh = SubResource("CylinderMesh_0285v")
+skeleton = NodePath("../Body")
+
+[node name="player_area" type="Area3D" parent="XROrigin3D" unique_id=554153612]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/player_area" unique_id=1416916025]
+shape = SubResource("CapsuleShape3D_v70ed")

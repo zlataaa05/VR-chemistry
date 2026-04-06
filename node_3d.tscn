@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://1y6hxp66b2as"]
-
-[node name="Node3D" type="Node3D" unique_id=998266863]
-
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1176574184]

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cprjt2v3bvwac"]
+
+[ext_resource type="Texture2D" uid="uid://cfv40r64xnd05" path="res://walls_texture_2.jpg" id="1_f7kl4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ly1ib"]
+albedo_texture = ExtResource("1_f7kl4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_evnpo"]
+
+[node name="Walls" type="Node3D" unique_id=35035400]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1342093237]
+material_override = SubResource("StandardMaterial3D_ly1ib")
+use_collision = true
+size = Vector3(0.1, 5, 16)
+material = SubResource("ShaderMaterial_evnpo")

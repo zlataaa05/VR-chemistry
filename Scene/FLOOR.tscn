@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bk4kmv1helfba"]
+
+[ext_resource type="Texture2D" uid="uid://wd8b18wa5r4c" path="res://floor_texture_2.jpg" id="1_83nuh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsihs"]
+albedo_texture = ExtResource("1_83nuh")
+uv1_scale = Vector3(2.13, 2.13, 2.13)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ryoud"]
+material = SubResource("StandardMaterial3D_wsihs")
+size = Vector2(40, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_oj3tl"]
+data = PackedVector3Array(20, 0, 25, -20, 0, 25, 20, 0, -25, -20, 0, 25, -20, 0, -25, 20, 0, -25)
+
+[node name="Floor" type="Node3D" unique_id=1004367032]
+transform = Transform3D(0.93902165, 0, 0, 0, 1, 0, 0, 0, 0.5265955, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1601993801]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.6837612, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ryoud")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1985733247]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1701865149]
+shape = SubResource("ConcavePolygonShape3D_oj3tl")
