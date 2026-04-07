@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://83hv132nxi5w" path="res://Scene/PLAYER.tscn" id="2_ojrwd"]
 [ext_resource type="PackedScene" uid="uid://cprjt2v3bvwac" path="res://Scene/WALLS.tscn" id="3_ojrwd"]
 [ext_resource type="PackedScene" uid="uid://bq5avhn83stny" path="res://Scene/SHELFS.tscn" id="4_4c5ek"]
+[ext_resource type="PackedScene" uid="uid://y0a42tekf16q" path="res://Scene/TABL_MENDELEEVA.tscn" id="5_8p385"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4c5ek"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -46,3 +47,6 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2
 
 [node name="Node3D" parent="." unique_id=567405109 instance=ExtResource("4_4c5ek")]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -6.9772606, 2.229106, 7.705755)
+
+[node name="Node3D2" parent="." unique_id=293565040 instance=ExtResource("5_8p385")]
+transform = Transform3D(-0.047631398, 0, -0.027500004, 0, 0.055, 0, 0.027500004, 0, -0.047631398, 4.0303555, 2.5487795, 0)

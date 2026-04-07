@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://y0a42tekf16q"]
+
+[ext_resource type="PackedScene" uid="uid://dqbq83j3yrqan" path="res://mendeleeva.fbx" id="1_ykgjs"]
+
+[node name="Node3D" type="Node3D" unique_id=293565040]
+
+[node name="mendeleeva" parent="." unique_id=1541175216 instance=ExtResource("1_ykgjs")]
+
+[editable path="mendeleeva"]
