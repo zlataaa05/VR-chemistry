@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://d2dvfat1hoki6"]
+
+[ext_resource type="PackedScene" uid="uid://deagi72piiy8g" path="res://office_table/source/151583_Paket Skrivbord [FLEXUS] 1600x800 mm.glb" id="1_jm7hm"]
+
+[node name="Table" type="Node3D" unique_id=1459995107]
+
+[node name="Project Name" parent="." unique_id=760011089 instance=ExtResource("1_jm7hm")]
+
+[editable path="Project Name"]

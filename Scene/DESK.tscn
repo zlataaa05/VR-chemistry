@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bv2su8nr7frm2"]
+
+[ext_resource type="PackedScene" uid="uid://dqptpqpyadmaw" path="res://school_desk/source/School_desk.fbx" id="1_gje2p"]
+
+[node name="Desk" type="Node3D" unique_id=83599086]
+
+[node name="School_desk" parent="." unique_id=315339742 instance=ExtResource("1_gje2p")]
+
+[node name="Chair_e" parent="School_desk" index="1" unique_id=629888773]
+transform = Transform3D(10, 0, 0, 0, -1.1920929e-06, 9.999999, 0, -9.999999, -1.1920929e-06, 0, 0.39999998, 0.5147394)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="School_desk" unique_id=709241232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00036621094, 0.496742, 0.25169373)
+visible = false
+use_collision = true
+size = Vector3(1.0310059, 1, 1.2312317)
+
+[editable path="School_desk"]

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://6di3myetsa4n"]
+
+[ext_resource type="PackedScene" uid="uid://vp8025n3t1ko" path="res://plant_1/source/rhyzome plant.fbx" id="1_ch5y1"]
+[ext_resource type="PackedScene" uid="uid://dp5xmp6ipwhvo" path="res://plant_2/source/potted_plant.fbx" id="2_rlod3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3bwkb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ch5y1"]
+
+[node name="Commode" type="Node3D" unique_id=1872663651]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1212936691]
+size = Vector3(1, 1, 4)
+material = SubResource("StandardMaterial3D_3bwkb")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1813970021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5074866, -0.2048879, 0)
+size = Vector3(0.08, 0.4, 3.9)
+material = SubResource("StandardMaterial3D_ch5y1")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=719743740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5074866, 0.23951676, 0)
+size = Vector3(0.08, 0.4, 3.9)
+material = SubResource("StandardMaterial3D_ch5y1")
+
+[node name="rhyzome plant" parent="." unique_id=641877436 instance=ExtResource("1_ch5y1")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0.04777497, 0.49467903, 0.42345518)
+
+[node name="potted_plant" parent="." unique_id=1529739785 instance=ExtResource("2_rlod3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05730486, 0.49954748, -0.42806607)
+
+[editable path="rhyzome plant"]
+[editable path="potted_plant"]

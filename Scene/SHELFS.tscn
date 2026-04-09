@@ -6,4 +6,10 @@
 
 [node name="shelfs" parent="." unique_id=286274109 instance=ExtResource("1_djr6s")]
 
+[node name="CSGBox3D" type="CSGBox3D" parent="shelfs" unique_id=957388642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.67071533, 0, -1.51989)
+visible = false
+use_collision = true
+size = Vector3(1.6947021, 8.045, 3.065)
+
 [editable path="shelfs"]

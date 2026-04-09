@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bcni6pifnmrc4"]
+
+[ext_resource type="PackedScene" uid="uid://dqp54rxxanuso" path="res://teachers_desk/source/teacher_Desk.fbx" id="1_vi7og"]
+
+[node name="Node3D" type="Node3D" unique_id=1181855515]
+
+[node name="teacher_Desk" parent="." unique_id=1742434912 instance=ExtResource("1_vi7og")]
+transform = Transform3D(6.765, 0, 0, 0, 6.765, 0, 0, 0, 6.765, 0, -0.15006134, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="teacher_Desk" unique_id=1294407576]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.098980546, 0)
+visible = false
+use_collision = true
+size = Vector3(0.4, 0.145, 0.185)
+
+[editable path="teacher_Desk"]

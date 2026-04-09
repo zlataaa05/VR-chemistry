@@ -7,6 +7,8 @@
 size = Vector3(1, 1.0712891, 1)
 
 [node name="Tabl_Mendeleeva" type="RigidBody3D" unique_id=309340841]
+gravity_scale = 0.0
+freeze = true
 script = ExtResource("1_nni6o")
 metadata/_custom_type_script = "uid://dcfdgrhu4kang"
 
