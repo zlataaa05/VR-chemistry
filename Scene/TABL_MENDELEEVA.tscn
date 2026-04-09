@@ -1,8 +1,18 @@
 [gd_scene format=3 uid="uid://y0a42tekf16q"]
 
+[ext_resource type="Script" uid="uid://dcfdgrhu4kang" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_nni6o"]
 [ext_resource type="PackedScene" uid="uid://dqbq83j3yrqan" path="res://mendeleeva.fbx" id="1_ykgjs"]
 
-[node name="Node3D" type="Node3D" unique_id=293565040]
+[sub_resource type="BoxShape3D" id="BoxShape3D_nni6o"]
+size = Vector3(1, 1.0712891, 1)
+
+[node name="Tabl_Mendeleeva" type="RigidBody3D" unique_id=309340841]
+script = ExtResource("1_nni6o")
+metadata/_custom_type_script = "uid://dcfdgrhu4kang"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829886068]
+transform = Transform3D(1.65, 0, 0, 0, 39.85, 0, 0, 0, 75.79, 0.1978035, 1.4204345, 0)
+shape = SubResource("BoxShape3D_nni6o")
 
 [node name="mendeleeva" parent="." unique_id=1541175216 instance=ExtResource("1_ykgjs")]
 

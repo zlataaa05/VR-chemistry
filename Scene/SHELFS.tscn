@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://nqgvaqqkvgey" path="res://Scene/shelfs.fbx" id="1_djr6s"]
 
-[node name="Node3D" type="Node3D" unique_id=567405109]
+[node name="Shelfs" type="Node3D" unique_id=567405109]
 
 [node name="shelfs" parent="." unique_id=286274109 instance=ExtResource("1_djr6s")]
 
