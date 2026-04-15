@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://80ncm7ratxmp"]
+
+[ext_resource type="Script" uid="uid://dcfdgrhu4kang" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_q1tj1"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_q1tj1"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_a6o3p"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yu0mo"]
+
+[node name="Atom" type="RigidBody3D" unique_id=180000509]
+collision_layer = 327685
+collision_mask = 327685
+mass = 0.001
+gravity_scale = 0.0
+script = ExtResource("1_q1tj1")
+picked_up_layer = 65540
+metadata/_custom_type_script = "uid://dcfdgrhu4kang"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1997857831]
+shape = SubResource("SphereShape3D_q1tj1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1169688657]
+mesh = SubResource("SphereMesh_a6o3p")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=753361264]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=784610047]
+shape = SubResource("SphereShape3D_yu0mo")

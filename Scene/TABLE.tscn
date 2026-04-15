@@ -6,4 +6,10 @@
 
 [node name="Project Name" parent="." unique_id=760011089 instance=ExtResource("1_jm7hm")]
 
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1705425359]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10046387, 0.38639832, -0.067474365)
+visible = false
+use_collision = true
+size = Vector3(1.588623, 0.7553406, 0.79681396)
+
 [editable path="Project Name"]

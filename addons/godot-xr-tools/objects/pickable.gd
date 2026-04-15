@@ -2,6 +2,9 @@
 class_name XRToolsPickable
 extends RigidBody3D
 
+var original_parent: Node = null
+var is_part_of_molecule = false
+var current_molecule_group = ""  # Переименовано, чтобы избежать конфликта
 
 ## XR Tools Pickable Object
 ##
@@ -121,13 +124,14 @@ func is_xr_class(name : String) -> bool:
 	return name == "XRToolsPickable"
 
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Get all grab points
-	for child in get_children():
-		var grab_point := child as XRToolsGrabPoint
-		if grab_point:
-			_grab_points.push_back(grab_point)
+	add_to_group("Atoms")
+	original_parent = get_parent()
+
+
 
 
 # Called when the node exits the tree

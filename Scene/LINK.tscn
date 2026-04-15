@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bfm0j0korimm0"]
+
+[node name="Link" type="CSGCylinder3D" unique_id=1020961627]
+radius = 0.02
+height = 0.5
+sides = 64
