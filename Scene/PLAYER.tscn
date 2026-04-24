@@ -18,8 +18,16 @@ extends Node3D
 script/source = "extends XRCamera3D
 "
 
+[sub_resource type="GDScript" id="GDScript_tn45m"]
+script/source = "extends XRController3D
+"
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_gkq6t"]
 size = Vector3(0.07471466, 0.14196777, 0.19903564)
+
+[sub_resource type="GDScript" id="GDScript_vykkc"]
+script/source = "extends XRController3D
+"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2xrox"]
 size = Vector3(0.07470703, 0.14202881, 0.19848633)
@@ -57,13 +65,14 @@ script = SubResource("GDScript_gr858")
 [node name="XRController3D_left" type="XRController3D" parent="XROrigin3D" unique_id=187378927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.74563575)
 tracker = &"left_hand"
+script = SubResource("GDScript_tn45m")
 
 [node name="LeftHand" parent="XROrigin3D/XRController3D_left" unique_id=677028907 instance=ExtResource("3_xi7vv")]
 transform = Transform3D(2.1960714, 0, 0, 0, 2.2536275, 0, 0, 0, 2.0892534, 0, 0, -0.1695087)
 hand_material_override = ExtResource("4_xi7vv")
 
 [node name="AreaLeftHand" type="Area3D" parent="XROrigin3D/XRController3D_left/LeftHand" unique_id=1295511854]
-collision_layer = 5
+collision_layer = 7
 collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/XRController3D_left/LeftHand/AreaLeftHand" unique_id=1149527261]
@@ -78,13 +87,14 @@ ranged_collision_mask = 65540
 [node name="XRController3D_right" type="XRController3D" parent="XROrigin3D" unique_id=1444017431]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.74563575)
 tracker = &"right_hand"
+script = SubResource("GDScript_vykkc")
 
 [node name="RightHand" parent="XROrigin3D/XRController3D_right" unique_id=2001910975 instance=ExtResource("8_yqncw")]
 transform = Transform3D(2.1960714, 0, 0, 0, 2.2536275, 0, 0, 0, 2.0892534, 0, 0, -0.1695087)
 hand_material_override = ExtResource("4_xi7vv")
 
 [node name="AreaRightHand" type="Area3D" parent="XROrigin3D/XRController3D_right/RightHand" unique_id=421689334]
-collision_layer = 5
+collision_layer = 7
 collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/XRController3D_right/RightHand/AreaRightHand" unique_id=81356827]

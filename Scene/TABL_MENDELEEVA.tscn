@@ -1,22 +1,22 @@
 [gd_scene format=3 uid="uid://y0a42tekf16q"]
 
-[ext_resource type="Script" uid="uid://dcfdgrhu4kang" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_nni6o"]
 [ext_resource type="PackedScene" uid="uid://dqbq83j3yrqan" path="res://mendeleeva.fbx" id="1_ykgjs"]
+[ext_resource type="Script" uid="uid://dkaomtwp8os3k" path="res://Scene/tabl_area.gd" id="2_nni6o"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_nni6o"]
-size = Vector3(1, 1.0712891, 1)
+[sub_resource type="GDScript" id="GDScript_ykgjs"]
+script/source = "extends Node3D
+"
 
-[node name="Tabl_Mendeleeva" type="RigidBody3D" unique_id=309340841]
-gravity_scale = 0.0
-freeze = true
-script = ExtResource("1_nni6o")
-metadata/_custom_type_script = "uid://dcfdgrhu4kang"
+[sub_resource type="BoxShape3D" id="BoxShape3D_ykgjs"]
+size = Vector3(1.74, 42.527, 75.695)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829886068]
-transform = Transform3D(1.65, 0, 0, 0, 39.85, 0, 0, 0, 75.79, 0.1978035, 1.4204345, 0)
-shape = SubResource("BoxShape3D_nni6o")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ykgjs"]
+
+[node name="Tabl_Mendeleeva" type="Node3D" unique_id=604770213]
+script = SubResource("GDScript_ykgjs")
 
 [node name="mendeleeva" parent="." unique_id=1541175216 instance=ExtResource("1_ykgjs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11, 0)
 
 [node name="1" type="Label3D" parent="mendeleeva/Куб" parent_id_path=PackedInt32Array(1541175216, 187911548) index="0" unique_id=1050681662]
 transform = Transform3D(1.3088223e-15, 2.99423e-08, 0.685, 0.68499994, -2.9942274e-08, -2.9646153e-21, 2.9942274e-08, 0.68499994, -2.99423e-08, 0.01577759, -0.0073750764, 0.0068027824)
@@ -3882,5 +3882,58 @@ outline_modulate = Color(0, 0, 0, 0)
 text = "(266)"
 font_size = 14
 horizontal_alignment = 0
+
+[node name="TablArea" type="Area3D" parent="mendeleeva" unique_id=188354622]
+collision_mask = 2
+script = ExtResource("2_nni6o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mendeleeva/TablArea" unique_id=536900203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9465313, 1.4003372, 0)
+shape = SubResource("BoxShape3D_ykgjs")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1314182526]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33378696, -28.424221, 38.280792)
+size = Vector3(1.77, 39, 1)
+material = SubResource("StandardMaterial3D_ykgjs")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1414520506]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.334, -28.097914, -38.281)
+size = Vector3(1.77, 39, 1)
+material = SubResource("StandardMaterial3D_ykgjs")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1706540780]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.3292427, -45.098576, 0)
+size = Vector3(1.77, 77.435, 1)
+material = SubResource("StandardMaterial3D_ykgjs")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=369813642]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.33378696, -47.05236, 38.280792)
+size = Vector3(1.77, 26.595, 1)
+material = SubResource("StandardMaterial3D_ykgjs")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=898066186]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.334, -47.052, -38.281)
+size = Vector3(1.77, 26.595, 1)
+material = SubResource("StandardMaterial3D_ykgjs")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="." unique_id=1166399571]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -8.001972, -48.035793, 38.280792)
+size = Vector3(1.77, 3.475, 1)
+material = SubResource("StandardMaterial3D_ykgjs")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="." unique_id=819968000]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 8.0121765, -48.035793, 38.280792)
+size = Vector3(1.77, 3.475, 1)
+material = SubResource("StandardMaterial3D_ykgjs")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="." unique_id=1904466693]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -8.001972, -48.035793, -38.281)
+size = Vector3(1.77, 3.475, 1)
+material = SubResource("StandardMaterial3D_ykgjs")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="." unique_id=1578565387]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 8.0121765, -48.035793, -38.281)
+size = Vector3(1.77, 3.475, 1)
+material = SubResource("StandardMaterial3D_ykgjs")
 
 [editable path="mendeleeva"]

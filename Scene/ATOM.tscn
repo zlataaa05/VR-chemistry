@@ -3,16 +3,21 @@
 [ext_resource type="Script" uid="uid://dcfdgrhu4kang" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_q1tj1"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_q1tj1"]
+radius = 0.1
 
 [sub_resource type="SphereMesh" id="SphereMesh_a6o3p"]
+radius = 0.1
+height = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_yu0mo"]
+radius = 0.1
 
 [node name="Atom" type="RigidBody3D" unique_id=180000509]
 collision_layer = 327685
 collision_mask = 327685
 mass = 0.001
 gravity_scale = 0.0
+freeze = true
 script = ExtResource("1_q1tj1")
 picked_up_layer = 65540
 metadata/_custom_type_script = "uid://dcfdgrhu4kang"

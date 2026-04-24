@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://7klqce3hjjo7"]
+
+[ext_resource type="Script" uid="uid://dcfdgrhu4kang" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_3u8c8"]
+
+[node name="Flag" type="RigidBody3D" unique_id=600107984]
+script = ExtResource("1_3u8c8")
+metadata/_custom_type_script = "uid://dcfdgrhu4kang"

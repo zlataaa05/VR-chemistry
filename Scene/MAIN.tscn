@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://bk4kmv1helfba" path="res://Scene/FLOOR.tscn" id="1_tyv3c"]
 [ext_resource type="Script" uid="uid://36l0eu0eii0a" path="res://Scene/main.gd" id="1_yvlmg"]
-[ext_resource type="PackedScene" uid="uid://bfm0j0korimm0" path="res://Scene/LINK.tscn" id="2_ftuiw"]
 [ext_resource type="PackedScene" uid="uid://83hv132nxi5w" path="res://Scene/PLAYER.tscn" id="2_ojrwd"]
 [ext_resource type="PackedScene" uid="uid://bq5avhn83stny" path="res://Scene/SHELFS.tscn" id="4_4c5ek"]
 [ext_resource type="PackedScene" uid="uid://y0a42tekf16q" path="res://Scene/TABL_MENDELEEVA.tscn" id="5_8p385"]
@@ -14,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://bv2su8nr7frm2" path="res://Scene/DESK.tscn" id="10_lpkqq"]
 [ext_resource type="PackedScene" uid="uid://bcni6pifnmrc4" path="res://Scene/TEACHERS_DESK.tscn" id="11_trt1i"]
 [ext_resource type="PackedScene" uid="uid://bqavmm4gbigkh" path="res://Scene/CHAIR.tscn" id="12_j5tvb"]
-[ext_resource type="PackedScene" uid="uid://80ncm7ratxmp" path="res://Scene/ATOM.tscn" id="13_goeh3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4c5ek"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -56,7 +54,6 @@ albedo_texture = ExtResource("6_xqnis")
 
 [node name="Main" type="Node3D" unique_id=998266863]
 script = ExtResource("1_yvlmg")
-cylinder_scene = ExtResource("2_ftuiw")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=587294472]
 environment = SubResource("Environment_xqnis")
@@ -69,13 +66,13 @@ shadow_enabled = true
 transform = Transform3D(-4.104594e-08, 0, 0.5265955, 0, 1, 0, -0.93902165, 0, -2.3018218e-08, 0, 0, 0)
 
 [node name="Player" parent="." unique_id=1355984825 instance=ExtResource("2_ojrwd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1937823, 1.1774098, -5.598444)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06762385, 1.1774098, -4.598444)
 
 [node name="Shelfs2" parent="." unique_id=567405109 instance=ExtResource("4_4c5ek")]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -6.9772606, 2.229106, 7.705755)
 
 [node name="Tabl_Mendeleeva" parent="." unique_id=293565040 instance=ExtResource("5_8p385")]
-transform = Transform3D(-2.4041265e-09, 0, -0.055, 0, 0.055000007, 0, 0.055, 0, -2.4041265e-09, 0, 2.4016628, -7.8318634)
+transform = Transform3D(-0.02847957, 0, -0.028087612, 0, 0.04, 0, 0.028087612, 0, -0.02847957, 3.5115762, 1.9492574, -5.8383083)
 
 [node name="Wall 1" type="CSGBox3D" parent="." unique_id=1778102809]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.002562, 2.5131805, -0.0026077032)
@@ -132,7 +129,7 @@ use_collision = true
 size = Vector3(0.305, 5, 16)
 
 [node name="Wall 4" type="CSGBox3D" parent="." unique_id=1225032957]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 2.5, -8)
+transform = Transform3D(0.0015709691, 0.0010916733, 0.99999815, -0.004134968, 0.9999909, -0.0010851722, -0.9999902, -0.004133256, 0.001575467, 0, 2.5, -8)
 material_override = SubResource("StandardMaterial3D_w64on")
 use_collision = true
 size = Vector3(0.305, 5, 16)
@@ -247,9 +244,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7180068, 0, 5.509355)
 
 [node name="Node3D3" parent="." unique_id=1054104230 instance=ExtResource("12_j5tvb")]
 transform = Transform3D(-5.507635e-08, 0, 1.26, 0, 1.26, 0, -1.26, 0, -5.507635e-08, 2.7384858, 0, 6.485163)
-
-[node name="Atom 1" parent="." unique_id=180000509 instance=ExtResource("13_goeh3")]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.7, 1.494, -7.362)
-
-[node name="Atom2" parent="." unique_id=1951598019 instance=ExtResource("13_goeh3")]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -0.3, 1.494, -7.362)
