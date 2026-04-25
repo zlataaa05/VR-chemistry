@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b8dilh7r0qmf6"]
+
+[ext_resource type="PackedScene" uid="uid://ckjybfa1v5dvs" path="res://test_tubes_2/source/Reageerbuis model.fbx" id="1_mb74h"]
+
+[node name="Test_tubes_2" type="Node3D" unique_id=1510613982]
+
+[node name="Reageerbuis model" parent="." unique_id=1222564066 instance=ExtResource("1_mb74h")]

@@ -5,7 +5,14 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_q1tj1"]
 radius = 0.1
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1tj1"]
+albedo_color = Color(1, 0.1764706, 0.26666668, 1)
+metallic = 0.4
+metallic_specular = 0.6
+roughness = 0.15
+
 [sub_resource type="SphereMesh" id="SphereMesh_a6o3p"]
+material = SubResource("StandardMaterial3D_q1tj1")
 radius = 0.1
 height = 0.2
 

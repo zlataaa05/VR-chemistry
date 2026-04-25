@@ -8,7 +8,7 @@ script/source = "extends Node3D
 "
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ykgjs"]
-size = Vector3(1.74, 42.527, 75.695)
+size = Vector3(0.9274609, 42.527, 75.695)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ykgjs"]
 
@@ -3888,7 +3888,7 @@ collision_mask = 2
 script = ExtResource("2_nni6o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mendeleeva/TablArea" unique_id=536900203]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9465313, 1.4003372, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33170712, 1.4003372, 0)
 shape = SubResource("BoxShape3D_ykgjs")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1314182526]

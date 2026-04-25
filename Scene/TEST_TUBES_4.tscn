@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dr6ivjc60ff0k"]
+
+[ext_resource type="PackedScene" uid="uid://dpvk4bujgki1c" path="res://test_tubes_4/source/Conical_flask_NakedSingularity/SM_Conical_flask_NakedSingularity.fbx" id="1_d03et"]
+
+[node name="Test_tubes_4" type="Node3D" unique_id=1474600298]
+
+[node name="SM_Conical_flask_NakedSingularity" parent="." unique_id=319487308 instance=ExtResource("1_d03et")]

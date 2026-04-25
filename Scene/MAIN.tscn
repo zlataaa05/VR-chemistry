@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://83hv132nxi5w" path="res://Scene/PLAYER.tscn" id="2_ojrwd"]
 [ext_resource type="PackedScene" uid="uid://bq5avhn83stny" path="res://Scene/SHELFS.tscn" id="4_4c5ek"]
 [ext_resource type="PackedScene" uid="uid://y0a42tekf16q" path="res://Scene/TABL_MENDELEEVA.tscn" id="5_8p385"]
-[ext_resource type="Texture2D" uid="uid://cfv40r64xnd05" path="res://walls_texture_2.jpg" id="5_xqnis"]
 [ext_resource type="Texture2D" uid="uid://bqymhdks4fhtw" path="res://view_texture_2.jpg" id="6_xqnis"]
 [ext_resource type="PackedScene" uid="uid://cv6bnd75wpi56" path="res://Scene/LIGHT.tscn" id="7_g2c68"]
 [ext_resource type="PackedScene" uid="uid://6di3myetsa4n" path="res://Scene/COMMODE.tscn" id="8_w64on"]
@@ -13,6 +12,14 @@
 [ext_resource type="PackedScene" uid="uid://bv2su8nr7frm2" path="res://Scene/DESK.tscn" id="10_lpkqq"]
 [ext_resource type="PackedScene" uid="uid://bcni6pifnmrc4" path="res://Scene/TEACHERS_DESK.tscn" id="11_trt1i"]
 [ext_resource type="PackedScene" uid="uid://bqavmm4gbigkh" path="res://Scene/CHAIR.tscn" id="12_j5tvb"]
+[ext_resource type="PackedScene" uid="uid://d3qs4sfbecw4o" path="res://Scene/TEST_TUBES_1.tscn" id="13_goeh3"]
+[ext_resource type="PackedScene" uid="uid://b8dilh7r0qmf6" path="res://Scene/TEST_TUBES_2.tscn" id="14_yvlmg"]
+[ext_resource type="PackedScene" uid="uid://cvol1b83gn41n" path="res://Scene/TEST_TUBES_3.tscn" id="15_ftuiw"]
+[ext_resource type="PackedScene" uid="uid://dr6ivjc60ff0k" path="res://Scene/TEST_TUBES_4.tscn" id="16_4ku1b"]
+[ext_resource type="PackedScene" uid="uid://bm06jivomvv18" path="res://test_tubes_5.glb" id="17_0bav0"]
+[ext_resource type="PackedScene" uid="uid://7klqce3hjjo7" path="res://Scene/FLAG.tscn" id="18_3bs0a"]
+[ext_resource type="PackedScene" uid="uid://80ncm7ratxmp" path="res://Scene/ATOM.tscn" id="19_pk2g5"]
+[ext_resource type="PackedScene" uid="uid://bfm0j0korimm0" path="res://Scene/LINK.tscn" id="20_ekrpo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4c5ek"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -28,20 +35,20 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g2c68"]
-albedo_texture = ExtResource("5_xqnis")
+albedo_color = Color(0.8509804, 0.89411765, 0.9529412, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_421j5"]
 transparency = 1
 albedo_color = Color(0.91764706, 1, 1, 0.09411765)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8p385"]
-albedo_texture = ExtResource("5_xqnis")
+albedo_color = Color(0.8509804, 0.89411765, 0.9529412, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xqnis"]
-albedo_texture = ExtResource("5_xqnis")
+albedo_color = Color(0.8509804, 0.89411765, 0.9529412, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w64on"]
-albedo_texture = ExtResource("5_xqnis")
+albedo_color = Color(0.8509804, 0.89411765, 0.9529412, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lpkqq"]
 albedo_texture = ExtResource("6_xqnis")
@@ -51,6 +58,8 @@ emission_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trt1i"]
 albedo_texture = ExtResource("6_xqnis")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goeh3"]
 
 [node name="Main" type="Node3D" unique_id=998266863]
 script = ExtResource("1_yvlmg")
@@ -156,6 +165,7 @@ rings = 100
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1962708994]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.4582157, 0)
+material_override = SubResource("StandardMaterial3D_goeh3")
 size = Vector3(15.96, 1, 15.825)
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=1823777584]
@@ -244,3 +254,45 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7180068, 0, 5.509355)
 
 [node name="Node3D3" parent="." unique_id=1054104230 instance=ExtResource("12_j5tvb")]
 transform = Transform3D(-5.507635e-08, 0, 1.26, 0, 1.26, 0, -1.26, 0, -5.507635e-08, 2.7384858, 0, 6.485163)
+
+[node name="Test_tubes_1" parent="." unique_id=1816522195 instance=ExtResource("13_goeh3")]
+transform = Transform3D(0.2540603, 0, 0.14992784, 0, 0.295, 0, -0.14992784, 0, 0.2540603, -7.37774, 1.2878938, -7.0417476)
+
+[node name="Test_tubes_2" parent="." unique_id=1510613982 instance=ExtResource("14_yvlmg")]
+transform = Transform3D(0.835, 0, 0, 0, 0.835, 0, 0, 0, 0.835, -7.2468038, 2.0804508, -6.8962145)
+
+[node name="Test_tubes_3" parent="." unique_id=1669531321 instance=ExtResource("15_ftuiw")]
+transform = Transform3D(0.3773533, 0, -0.09851123, 0, 0.39, 0, 0.09851123, 0, 0.3773533, -7.5303736, 2.224793, 6.6242948)
+
+[node name="Test_tubes_4" parent="." unique_id=1474600298 instance=ExtResource("16_4ku1b")]
+transform = Transform3D(1.3113776, 0, 0.18950976, 0, 1.325, 0, -0.18950976, 0, 1.3113776, -7.2599015, 2.0408924, 7.3518877)
+
+[node name="Sketchfab_Scene" parent="." unique_id=299741062 instance=ExtResource("17_0bav0")]
+transform = Transform3D(0.195, 0, 0, 0, 0.195, 0, 0, 0, 0.195, 3.263924, 1.0522792, 5.380227)
+
+[node name="Flag" parent="." unique_id=600107984 instance=ExtResource("18_3bs0a")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.4515408, 1.7353714, -7.1338873)
+
+[node name="Atom" parent="Flag" unique_id=180000509 instance=ExtResource("19_pk2g5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, -0.4683727, -0.15876615)
+
+[node name="Atom2" parent="Flag" unique_id=487734277 instance=ExtResource("19_pk2g5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, -0.4607544, -0.8165235)
+
+[node name="Atom3" parent="Flag" unique_id=127203398 instance=ExtResource("19_pk2g5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, 0.016099572, -0.48005247)
+
+[node name="Atom4" parent="Flag" unique_id=1322142869 instance=ExtResource("19_pk2g5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, -0.21822202, -1.3813707)
+
+[node name="CSGCylinder3D" parent="Flag" unique_id=1337699838 instance=ExtResource("20_ekrpo")]
+transform = Transform3D(1, -2.470116e-08, -7.64841e-09, 2.4701158e-08, 0.8250248, 0.5650967, -7.6484135e-09, -0.5650967, 0.8250248, 0, -0.19039309, -0.31342423)
+
+[node name="CSGCylinder3D2" parent="Flag" unique_id=1531338940 instance=ExtResource("20_ekrpo")]
+transform = Transform3D(1, 2.4344963e-08, -7.4070208e-09, -2.4344969e-08, 0.8305474, -0.556948, -7.407017e-09, 0.556948, 0.8305474, 0, -0.2377063, -0.6740962)
+
+[node name="CSGCylinder3D3" parent="Flag" unique_id=2031927942 instance=ExtResource("20_ekrpo")]
+transform = Transform3D(1, -4.370344e-08, -4.2877584e-08, 4.370344e-08, 0.019075325, 0.99981815, -4.2877595e-08, -0.99981815, 0.019075325, 0, -0.47051394, -0.48962867)
+
+[node name="CSGCylinder3D4" parent="Flag" unique_id=1008864125 instance=ExtResource("20_ekrpo")]
+transform = Transform3D(1, -3.9963933e-08, -2.600348e-08, 3.9963943e-08, 0.40510973, 0.91426826, -2.6003505e-08, -0.91426826, 0.40510973, 0, -0.3499781, -1.1119254)

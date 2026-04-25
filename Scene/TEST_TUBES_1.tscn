@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://d3qs4sfbecw4o"]
+
+[ext_resource type="PackedScene" uid="uid://bkukfvifi5jvi" path="res://test_tubes_1/source/Phials_Collection.fbx" id="1_06wpn"]
+
+[node name="Test_tubes_1" type="Node3D" unique_id=1816522195]
+
+[node name="Phials_Collection" parent="." unique_id=1339677319 instance=ExtResource("1_06wpn")]
