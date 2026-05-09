@@ -22,7 +22,6 @@ albedo_color = Color(0.3254902, 1, 1, 1)
 material = SubResource("StandardMaterial3D_3ynsj")
 top_radius = 0.001
 bottom_radius = 0.02
-height = 3.0
 
 [node name="Pointer" type="RigidBody3D" unique_id=1524902413]
 collision_layer = 327685
@@ -46,10 +45,10 @@ shape = SubResource("CylinderShape3D_javdl")
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=122470989]
 enabled = false
-target_position = Vector3(0, 3, 0)
+target_position = Vector3(0, 2, 0)
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RayCast3D" unique_id=429060103]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5053496, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9982647, 0)
 mesh = SubResource("CylinderMesh_sxgpi")

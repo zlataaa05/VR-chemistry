@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bk4kmv1helfba"]
 
-[ext_resource type="Texture2D" uid="uid://wd8b18wa5r4c" path="res://floor_texture_2.jpg" id="1_83nuh"]
+[ext_resource type="Texture2D" uid="uid://wd8b18wa5r4c" path="res://floor_texture.jpg" id="1_83nuh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsihs"]
 albedo_texture = ExtResource("1_83nuh")

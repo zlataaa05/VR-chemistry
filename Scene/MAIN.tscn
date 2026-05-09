@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bfm0j0korimm0" path="res://Scene/LINK.tscn" id="20_ekrpo"]
 [ext_resource type="PackedScene" uid="uid://qbotyi3iqwsn" path="res://Scene/POINTER.tscn" id="21_nvgk1"]
 [ext_resource type="Script" uid="uid://cg33chvprvyfv" path="res://addons/godot-xr-tools/xr/start_xr.gd" id="22_n61mx"]
+[ext_resource type="PackedScene" uid="uid://cjq48s505qcur" path="res://Scene/TABL_MENDELEEVA_2.tscn" id="23_kc57o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4c5ek"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -77,7 +78,7 @@ shadow_enabled = true
 transform = Transform3D(-4.104594e-08, 0, 0.5265955, 0, 1, 0, -0.93902165, 0, -2.3018218e-08, 0, 0, 0)
 
 [node name="Player" parent="." unique_id=1355984825 instance=ExtResource("2_ojrwd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06762385, 1.1774098, -4.598444)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06762385, 1.5856651, -4.598444)
 
 [node name="Shelfs2" parent="." unique_id=567405109 instance=ExtResource("4_4c5ek")]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -6.9772606, 2.229106, 7.705755)
@@ -305,3 +306,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3909824, 1.319932, -6.87795
 [node name="XRToolsStartXR" type="Node" parent="." unique_id=1834913355]
 script = ExtResource("22_n61mx")
 metadata/_custom_type_script = "uid://cg33chvprvyfv"
+
+[node name="Tabl_Mendeleeva2" parent="." unique_id=2023467921 instance=ExtResource("23_kc57o")]
+transform = Transform3D(-2.6226832e-09, 0, -0.06, 0, 0.06, 0, 0.06, 0, -2.6226832e-09, 0, 2.6249676, -7.8347235)

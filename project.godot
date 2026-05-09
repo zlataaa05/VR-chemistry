@@ -32,6 +32,14 @@ version_control/autoload_on_startup=true
 
 enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
+[global_group]
+
+atomic_area_group=""
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
