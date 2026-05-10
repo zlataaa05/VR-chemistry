@@ -1,7 +1,7 @@
 extends Node3D
 
 # Ссылки
-@onready var table_area = $Tabl_Mendeleeva/mendeleeva/TablArea
+@onready var table = $Tabl_Mendeleeva2
 @export var atom_scene: PackedScene = preload("res://Scene/ATOM.tscn")
 @export var link: PackedScene = preload("res://Scene/LINK.tscn")
 # Ссылка на указку и контроллер
@@ -13,16 +13,22 @@ extends Node3D
 var atoms: Array = []  # Список всех атомов
 var links: Dictionary = {}  # Словарь существующих связей (ключ: "id1_id2")
 
-var is_aiming_at_table: bool = false	# флаг - наведена ли указка на таблицу
+var is_aiming_at_table_cell: bool = false	# флаг - наведена ли указка на таблицу
+var current_hit_cell: Area3D = null  # текущая ячейка, на которую наведена указка
 var current_hit_point: Vector3 = Vector3.ZERO	# текущая точка попадания указки, по умолчанию ноль
 
+# Данные об атомах из JSON
+var atoms_data: Dictionary = {}  # id -> данные атома
+
 func _ready():
-	if not table_area:
-		print("Area таблицы не найдена")
+	# Загружаем данные об атомах
+	_load_atoms_data()
+	
+	print("Доступные ID в JSON: ", atoms_data.keys())
+	
+	if not table:
+		print("Таблица не найдена")
 		return
-		
-	table_area.area_entered.connect(_on_table_area_area_entered)
-	print("Сигнал таблицы подключен")
 	
 	# Подключаем сигналы от указки (XRToolsPickable)
 	if pointer:
@@ -34,11 +40,32 @@ func _ready():
 		if pointer.has_signal("dropped"):
 			pointer.dropped.connect(_on_pointer_dropped)
 		
-		# Сигнал нажатия action кнопки (обычно это trigger или grip)
+		# Сигнал нажатия action кнопки
 		if pointer.has_signal("action_pressed"):
 			pointer.action_pressed.connect(_on_pointer_action_pressed)
 	
-	print("Система готова: возьмите указку и наведите на таблицу")
+	print("Система готова")
+	
+func _load_atoms_data():
+	# Открываем JSON файл
+	var file = FileAccess.open("res://data/atoms.json", FileAccess.READ)
+	if file:
+		var content = file.get_as_text()
+		var json = JSON.new()
+		var parse_result = json.parse(content)
+		if parse_result == OK:
+			var data = json.data
+			if data is Array:
+				for atom in data:
+					atoms_data[atom["id"]] = atom
+				print("Загружено ", atoms_data.size(), " атомов")
+			else:
+				print("Ошибка: данные не являются массивом")
+		else:
+			print("Ошибка парсинга JSON: ", json.get_error_message())
+		file.close()
+	else:
+		print("Не удалось открыть файл atoms.json")
 	
 func _process(delta):
 	# Вызываем проверку луча каждый кадр
@@ -55,14 +82,16 @@ func _handle_raycast():
 	if raycast.is_colliding():
 		var collider = raycast.get_collider()
 		
-		# Проверяем, попали ли в Area3D таблицы
-		if collider == table_area or collider.get_parent() == table_area:
-			is_aiming_at_table = true
+		# Проверяем, попали ли указкой в Area3D ячеек таблицы
+		if collider is Area3D and collider.is_in_group("atomic_area_group"):
+			is_aiming_at_table_cell = true
+			current_hit_cell = collider
 			current_hit_point = raycast.get_collision_point()
-			print("Указка наведена на таблицу")
+			print("Указка наведена на ячейку: ", collider.name)
 			return
 	
-	is_aiming_at_table = false
+	is_aiming_at_table_cell = false
+	current_hit_cell = null
 	
 func _on_pointer_picked_up(_pickable):
 	print("Указка взята в руку")
@@ -72,23 +101,17 @@ func _on_pointer_picked_up(_pickable):
 
 func _on_pointer_dropped(_pickable):
 	print("Указка отпущена")
-	is_aiming_at_table = false
-	# Выключаем луч, чтобы не тратить ресурсы
+	is_aiming_at_table_cell = false
+	current_hit_cell = null
+	# Выключаем луч
 	if raycast:
 		raycast.enabled = false
 
 func _on_pointer_action_pressed(_pickable):
-	# Это вызывается, когда игрок нажимает action кнопку (обычно trigger)
-	# пока указка в руке
+	# Вызывается, когда игрок нажимает action кнопку (trigger) пока указка в руке
 	print("Нажат триггер")
-	if is_aiming_at_table:
-		_spawn_atom()	
-	
-func _on_table_area_area_entered(area: Area3D) -> void:
-	# Проверка, что это рука
-	if _is_player_hand(area):
-		# Создаем 1 атом
-		_spawn_atom()
+	if is_aiming_at_table_cell and current_hit_cell:
+		_spawn_atom_from_cell(current_hit_cell)	
 		
 func _is_player_hand(area: Area3D) -> bool:
 	var node_name = area.name.to_lower()
@@ -102,20 +125,78 @@ func _is_player_hand(area: Area3D) -> bool:
 		
 	return false
 	
-func _spawn_atom() -> void:
-	if not atom_scene:
-		print("Сцена атома не найдена!")
+func _spawn_atom_from_cell(cell_area: Area3D) -> void:
+# Извлекаем ID элемента из названия Area3D
+	# Ожидаемый формат: "area_1", "area_2", "area_3" и т.д.
+	var cell_name = cell_area.name
+	var atom_id = _extract_id_from_area_name(cell_name)
+	
+	if atom_id == 0:
+		print("Не удалось определить ID атома из названия: ", cell_name)
 		return
-		
+	
+	# Получаем данные атома из JSON
+	var atom_data = atoms_data.get(float(atom_id))
+	if not atom_data:
+		print("Данные для атома с ID ", atom_id, " не найдены в JSON")
+		return
+	
+	# Создаем атом
 	var atom_instance = atom_scene.instantiate()
 	
-	var spawn_pos = table_area.global_position + Vector3(0, 0.5, 0.5)
+	# Устанавливаем позицию спавна
+	var spawn_pos = table.global_position + Vector3(0, -0.5, 0.7)
 	atom_instance.global_position = spawn_pos
+	
+	# Применяем цвет атома из JSON
+	_apply_atom_color(atom_instance, atom_data["color"])
+	
+	if atom_instance.has_method("set_atom_data"):
+		atom_instance.set_atom_data(atom_data)
 	
 	add_child(atom_instance)
 	atoms.append(atom_instance)
 	
-	print("Создан 1 атом. Всего атомов: ", atoms.size())
+	print("Создан атом: ", atom_data["name"], " (", atom_data["symbol"], ")")
+	print("Всего атомов: ", atoms.size())
+	
+func _extract_id_from_area_name(area_name: String) -> int:
+	# Извлекаем число из названия "area_1", "area_2" и т.д.
+	var parts = area_name.split("_")
+	if parts.size() >= 2:
+		var id_str = parts[1]
+		# Если есть дополнительные подчеркивания, берем только цифры
+		var id_int = id_str.to_int()
+		if id_int > 0:
+			return id_int
+	return 0
+	
+func _apply_atom_color(atom_instance: Node3D, color_hex: String):
+	# Ищем MeshInstance3D в сцене атома
+	var mesh_instance = _find_mesh_instance(atom_instance)
+	if mesh_instance and mesh_instance is MeshInstance3D:
+		# Создаем новый материал или изменяем существующий
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color(color_hex)
+		
+		# Настройки глянца (металлический блеск)
+		material.metallic = 0.4
+		material.metallic_specular = 0.6
+		material.roughness = 0.15
+		material.reflectivity = 0.5 
+		
+		mesh_instance.material_override = material
+		print("Применен цвет: ", color_hex)
+		
+func _find_mesh_instance(node: Node) -> MeshInstance3D:
+	# Рекурсивно ищем первый MeshInstance3D
+	if node is MeshInstance3D:
+		return node
+	for child in node.get_children():
+		var result = _find_mesh_instance(child)
+		if result:
+			return result
+	return null
 	
 func _update_all_links():
 	# Проверяем все пары атомов

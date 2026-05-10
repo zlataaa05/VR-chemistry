@@ -74,6 +74,33 @@ environment = SubResource("Environment_xqnis")
 transform = Transform3D(0.0074658645, -0.9615873, 0.274398, 0.00187159, 0.27441844, 0.96160865, -0.9999703, -0.0066656778, 0.003848467, -0.037590027, 27.537516, 0)
 shadow_enabled = true
 
+[node name="Flag" parent="." unique_id=600107984 instance=ExtResource("18_3bs0a")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.9599259, 1.7353714, -7.1338873)
+
+[node name="Atom" parent="Flag" unique_id=180000509 instance=ExtResource("19_pk2g5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, -0.4683727, -0.15876615)
+
+[node name="Atom2" parent="Flag" unique_id=487734277 instance=ExtResource("19_pk2g5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, -0.4607544, -0.8165235)
+
+[node name="Atom3" parent="Flag" unique_id=127203398 instance=ExtResource("19_pk2g5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, 0.016099572, -0.48005247)
+
+[node name="Atom4" parent="Flag" unique_id=1322142869 instance=ExtResource("19_pk2g5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, -0.21822202, -1.3813707)
+
+[node name="CSGCylinder3D" parent="Flag" unique_id=1337699838 instance=ExtResource("20_ekrpo")]
+transform = Transform3D(1, -2.470116e-08, -7.64841e-09, 2.4701158e-08, 0.8250248, 0.5650967, -7.6484135e-09, -0.5650967, 0.8250248, 0, -0.19039309, -0.31342423)
+
+[node name="CSGCylinder3D2" parent="Flag" unique_id=1531338940 instance=ExtResource("20_ekrpo")]
+transform = Transform3D(1, 2.4344963e-08, -7.4070208e-09, -2.4344969e-08, 0.8305474, -0.556948, -7.407017e-09, 0.556948, 0.8305474, 0, -0.2377063, -0.6740962)
+
+[node name="CSGCylinder3D3" parent="Flag" unique_id=2031927942 instance=ExtResource("20_ekrpo")]
+transform = Transform3D(1, -4.370344e-08, -4.2877584e-08, 4.370344e-08, 0.019075325, 0.99981815, -4.2877595e-08, -0.99981815, 0.019075325, 0, -0.47051394, -0.48962867)
+
+[node name="CSGCylinder3D4" parent="Flag" unique_id=1008864125 instance=ExtResource("20_ekrpo")]
+transform = Transform3D(1, -3.9963933e-08, -2.600348e-08, 3.9963943e-08, 0.40510973, 0.91426826, -2.6003505e-08, -0.91426826, 0.40510973, 0, -0.3499781, -1.1119254)
+
 [node name="Floor" parent="." unique_id=1004367032 instance=ExtResource("1_tyv3c")]
 transform = Transform3D(-4.104594e-08, 0, 0.5265955, 0, 1, 0, -0.93902165, 0, -2.3018218e-08, 0, 0, 0)
 
@@ -273,35 +300,8 @@ transform = Transform3D(1.3113776, 0, 0.18950976, 0, 1.325, 0, -0.18950976, 0, 1
 [node name="Sketchfab_Scene" parent="." unique_id=299741062 instance=ExtResource("17_0bav0")]
 transform = Transform3D(0.195, 0, 0, 0, 0.195, 0, 0, 0, 0.195, 3.263924, 1.0522792, 5.380227)
 
-[node name="Flag" parent="." unique_id=600107984 instance=ExtResource("18_3bs0a")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.4515408, 1.7353714, -7.1338873)
-
-[node name="Atom" parent="Flag" unique_id=180000509 instance=ExtResource("19_pk2g5")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, -0.4683727, -0.15876615)
-
-[node name="Atom2" parent="Flag" unique_id=487734277 instance=ExtResource("19_pk2g5")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, -0.4607544, -0.8165235)
-
-[node name="Atom3" parent="Flag" unique_id=127203398 instance=ExtResource("19_pk2g5")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, 0.016099572, -0.48005247)
-
-[node name="Atom4" parent="Flag" unique_id=1322142869 instance=ExtResource("19_pk2g5")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.021603584, -0.21822202, -1.3813707)
-
-[node name="CSGCylinder3D" parent="Flag" unique_id=1337699838 instance=ExtResource("20_ekrpo")]
-transform = Transform3D(1, -2.470116e-08, -7.64841e-09, 2.4701158e-08, 0.8250248, 0.5650967, -7.6484135e-09, -0.5650967, 0.8250248, 0, -0.19039309, -0.31342423)
-
-[node name="CSGCylinder3D2" parent="Flag" unique_id=1531338940 instance=ExtResource("20_ekrpo")]
-transform = Transform3D(1, 2.4344963e-08, -7.4070208e-09, -2.4344969e-08, 0.8305474, -0.556948, -7.407017e-09, 0.556948, 0.8305474, 0, -0.2377063, -0.6740962)
-
-[node name="CSGCylinder3D3" parent="Flag" unique_id=2031927942 instance=ExtResource("20_ekrpo")]
-transform = Transform3D(1, -4.370344e-08, -4.2877584e-08, 4.370344e-08, 0.019075325, 0.99981815, -4.2877595e-08, -0.99981815, 0.019075325, 0, -0.47051394, -0.48962867)
-
-[node name="CSGCylinder3D4" parent="Flag" unique_id=1008864125 instance=ExtResource("20_ekrpo")]
-transform = Transform3D(1, -3.9963933e-08, -2.600348e-08, 3.9963943e-08, 0.40510973, 0.91426826, -2.6003505e-08, -0.91426826, 0.40510973, 0, -0.3499781, -1.1119254)
-
 [node name="Pointer" parent="." unique_id=1524902413 instance=ExtResource("21_nvgk1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3909824, 1.319932, -6.877959)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3909824, 1.209953, -6.7034097)
 
 [node name="XRToolsStartXR" type="Node" parent="." unique_id=1834913355]
 script = ExtResource("22_n61mx")
