@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cxnd7s7j4wrxl"]
+
+[ext_resource type="PackedScene" uid="uid://bjd78b6m0d8il" path="res://work_desk/source/escritorio 1.fbx" id="1_f03ke"]
+
+[node name="Work_desk" type="Node3D" unique_id=449598841]
+
+[node name="escritorio 1" parent="." unique_id=851598224 instance=ExtResource("1_f03ke")]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=158359135]
+transform = Transform3D(1.8861585, 0, 0, 0, 0.23829027, 0, 0, 0, 4.0551076, 0, 0, 6.300335)
+visible = false
+use_collision = true
+
+[editable path="escritorio 1"]

@@ -4,9 +4,13 @@ extends Node3D
 @onready var table = $Tabl_Mendeleeva2
 @export var atom_scene: PackedScene = preload("res://Scene/ATOM.tscn")
 @export var link: PackedScene = preload("res://Scene/LINK.tscn")
-# Ссылка на указку и контроллер
+# Ссылка на указку и контроллера
 @onready var raycast = $Pointer/RayCast3D
 @onready var pointer = $Pointer
+# Ссылка на Flag в сцене
+@onready var flag = $Flag
+# Ссылка на Flag (чтобы перемещать молекулу)
+@export var flag_scene: PackedScene = preload("res://Scene/FLAG.tscn")
 
 @export var link_length: float = 0.5  # Длина связи
 
@@ -20,6 +24,12 @@ var current_hit_point: Vector3 = Vector3.ZERO	# текущая точка поп
 # Данные об атомах из JSON
 var atoms_data: Dictionary = {}  # id -> данные атома
 
+# Переменные для управления флагами
+var original_flag_position: Vector3 = Vector3.ZERO  # исходная позиция флага
+var original_flag_rotation: Vector3 = Vector3.ZERO  # исходная позиция флага
+var current_flag_instance: Node3D = null  # текущий активный флаг
+var is_flag_moved: bool = false  # флаг, был ли перемещен текущий флаг
+
 func _ready():
 	# Загружаем данные об атомах
 	_load_atoms_data()
@@ -29,6 +39,14 @@ func _ready():
 	if not table:
 		print("Таблица не найдена")
 		return
+		
+	# Сохраняем исходную позицию и ротацию флага 
+	if flag:
+		original_flag_position = flag.global_position
+		original_flag_rotation = flag.rotation
+		current_flag_instance = flag
+		print("Исходная позиция флага: ", original_flag_position)
+		print("Исходная ротация флага: ", original_flag_rotation)
 	
 	# Подключаем сигналы от указки (XRToolsPickable)
 	if pointer:
@@ -74,6 +92,8 @@ func _process(delta):
 	_update_all_links()
 	# Обновляем транформ всех связей
 	_update_existing_links_transforms()
+	# Проверяем, не был ли перемещен флаг
+	_check_flag_movement()
 	
 func _handle_raycast():
 	if not raycast:
@@ -92,6 +112,49 @@ func _handle_raycast():
 	
 	is_aiming_at_table_cell = false
 	current_hit_cell = null
+	
+func _check_flag_movement():
+	# Проверяем, существует ли текущий флаг
+	if not current_flag_instance or not is_instance_valid(current_flag_instance):
+		return
+	
+	# Проверяем, был ли флаг перемещен с исходной позиции и ротации
+	var current_position = current_flag_instance.global_position
+	var current_rotation = current_flag_instance.rotation
+	
+	var distance_moved = current_position.distance_to(original_flag_position)
+	
+	# Если флаг переместился больше чем на допустимую погрешность и еще не создали новый флаг
+	if distance_moved > 0.5 and not is_flag_moved:
+		is_flag_moved = true
+		_create_new_flag_at_original_position()
+		print("Флаг был перемещен или повернут. Создан новый флаг на исходной позиции и ротации")
+		
+func _create_new_flag_at_original_position():
+	# Создаем новый экземпляр флага
+	if not flag_scene:
+		print("Сцена флага не загружена!")
+		return
+	
+	var new_flag = flag_scene.instantiate()
+	
+	# Устанавливаем позицию на исходную
+	new_flag.global_position = original_flag_position
+	
+	# Устанавливаем ротацию на исходную
+	new_flag.rotation = original_flag_rotation
+	
+	# Добавляем в сцену
+	add_child(new_flag)
+	
+	# Обновляем ссылку на текущий флаг
+	current_flag_instance = new_flag
+	
+	# Сбрасываем флаг перемещения, чтобы отслеживать перемещение нового флага
+	is_flag_moved = false
+	
+	print("Создан новый флаг на позиции: ", original_flag_position)
+	print("С ротацией: ", original_flag_rotation)
 	
 func _on_pointer_picked_up(_pickable):
 	print("Указка взята в руку")
@@ -126,7 +189,7 @@ func _is_player_hand(area: Area3D) -> bool:
 	return false
 	
 func _spawn_atom_from_cell(cell_area: Area3D) -> void:
-# Извлекаем ID элемента из названия Area3D
+	# Извлекаем ID элемента из названия Area3D
 	# Ожидаемый формат: "area_1", "area_2", "area_3" и т.д.
 	var cell_name = cell_area.name
 	var atom_id = _extract_id_from_area_name(cell_name)
@@ -145,7 +208,7 @@ func _spawn_atom_from_cell(cell_area: Area3D) -> void:
 	var atom_instance = atom_scene.instantiate()
 	
 	# Устанавливаем позицию спавна
-	var spawn_pos = table.global_position + Vector3(0, -0.5, 0.7)
+	var spawn_pos = table.global_position + Vector3(0, -0.5, 0.9)
 	atom_instance.global_position = spawn_pos
 	
 	# Применяем цвет атома из JSON

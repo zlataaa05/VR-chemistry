@@ -31,6 +31,7 @@ size = Vector3(0.02, 0.075, 0.03)
 size = Vector3(0.02, 0.23259278, 0.23271972)
 
 [node name="Flag" type="RigidBody3D" unique_id=600107984]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, 0, 0, 0)
 collision_layer = 327685
 collision_mask = 327685
 mass = 0.001
@@ -41,7 +42,7 @@ picked_up_layer = 65540
 metadata/_custom_type_script = "uid://dcfdgrhu4kang"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1110649425]
-transform = Transform3D(1, 0, 0, 0, 0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, -0.00014414918, 0.00015277881)
+transform = Transform3D(1, 0, 0, 0, 0.7071067, -0.7071067, 0, 0.7071067, 0.7071067, 0, -0.00014414918, 0.00015277881)
 shape = SubResource("BoxShape3D_3u8c8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=373634327]

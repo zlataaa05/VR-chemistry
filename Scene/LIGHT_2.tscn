@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dy40vd1wyxn3j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bg8pd"]
+albedo_color = Color(0.737193, 0.7371929, 0.7371929, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gp3wn"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 3.0
+
+[node name="Light_2" type="Node3D" unique_id=1757224771]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=245757373]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.025244141, 0)
+size = Vector3(0.1, 0.04951172, 2)
+material = SubResource("StandardMaterial3D_bg8pd")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=721441225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04057081, 0)
+size = Vector3(0.06, 0.04, 1.9)
+material = SubResource("StandardMaterial3D_gp3wn")
