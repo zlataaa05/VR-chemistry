@@ -28,12 +28,25 @@ sky = SubResource("Sky_8p385")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ku1b"]
+albedo_color = Color(0.3211677, 0.1548546, 0.11489264, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0bav0"]
+albedo_color = Color(0.32156864, 0.15294118, 0.11372549, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3bs0a"]
+albedo_color = Color(0.32156864, 0.15294118, 0.11372549, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pk2g5"]
+albedo_color = Color(0.32156864, 0.15294118, 0.11372549, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g2c68"]
 albedo_color = Color(0.9490196, 0.8784314, 0.78039217, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_421j5"]
 transparency = 1
 albedo_color = Color(0.91764706, 1, 1, 0.09411765)
+metallic = 0.3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8p385"]
 albedo_color = Color(0.9490196, 0.8784314, 0.78039217, 1)
@@ -107,6 +120,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06762385, 1.5856651, -4.59
 [node name="Shelfs2" parent="." unique_id=567405109 instance=ExtResource("4_4c5ek")]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -6.9772606, 2.229106, 7.705755)
 
+[node name="1" type="CSGBox3D" parent="." unique_id=634279231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.003104, 2.7146575, 2.4413924)
+use_collision = true
+size = Vector3(0.30679688, 2.471, 0.09)
+material = SubResource("StandardMaterial3D_4ku1b")
+
+[node name="2" type="CSGBox3D" parent="." unique_id=1236834272]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.001728, 2.7146575, 2.4413924)
+use_collision = true
+size = Vector3(0.305, 0.09, 1.75)
+material = SubResource("StandardMaterial3D_0bav0")
+
+[node name="3" type="CSGBox3D" parent="." unique_id=987476673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.003104, 2.7146575, -2.4466076)
+use_collision = true
+size = Vector3(0.30679688, 2.471, 0.09)
+material = SubResource("StandardMaterial3D_3bs0a")
+
+[node name="4" type="CSGBox3D" parent="." unique_id=522908749]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.001728, 2.7146575, -2.4466076)
+use_collision = true
+size = Vector3(0.305, 0.09, 1.75)
+material = SubResource("StandardMaterial3D_pk2g5")
+
+[node name="5" type="CSGBox3D" parent="." unique_id=1080225611]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.003104, 2.7146575, 3.3528194)
+use_collision = true
+size = Vector3(0.307, 2.6, 0.09)
+material = SubResource("StandardMaterial3D_4ku1b")
+
 [node name="Wall 1" type="CSGBox3D" parent="." unique_id=1778102809]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.002562, 2.5131805, -0.0026077032)
 material_override = SubResource("StandardMaterial3D_g2c68")
@@ -122,22 +165,6 @@ size = Vector3(1, 2.4707031, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.75, 0.020999908, 0.20147705, -2.444)
 operation = 2
 size = Vector3(1, 2.4707031, 1)
-
-[node name="1" type="CSGBox3D" parent="Wall 1" unique_id=634279231]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005426407, 0.20147705, 2.444)
-size = Vector3(0.30679688, 2.471, 0.09)
-
-[node name="2" type="CSGBox3D" parent="Wall 1" unique_id=1236834272]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0008330345, 0.20147705, 2.444)
-size = Vector3(0.305, 0.09, 1.75)
-
-[node name="3" type="CSGBox3D" parent="Wall 1" unique_id=987476673]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005426407, 0.20147705, -2.444)
-size = Vector3(0.30679688, 2.471, 0.09)
-
-[node name="4" type="CSGBox3D" parent="Wall 1" unique_id=522908749]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0008330345, 0.20147705, -2.444)
-size = Vector3(0.305, 0.09, 1.75)
 
 [node name="glass 1" type="CSGBox3D" parent="." unique_id=1105482769]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.75, -7.9979587, 2.7011988, 2.4439998)
@@ -397,3 +424,45 @@ transform = Transform3D(-4.371139e-08, 0, -1.39, 0, 0.64, 0, 1, 0, -6.075883e-08
 
 [node name="Flag" parent="." unique_id=284997713 instance=ExtResource("18_3bs0a")]
 transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -0.5460447, 1.4185944, -6.2692184)
+
+[node name="6" type="CSGBox3D" parent="." unique_id=497943379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.003104, 2.7146575, 1.5351441)
+use_collision = true
+size = Vector3(0.307, 2.6, 0.09)
+material = SubResource("StandardMaterial3D_4ku1b")
+
+[node name="7" type="CSGBox3D" parent="." unique_id=1373839946]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.003104, 2.7146575, -1.5357437)
+use_collision = true
+size = Vector3(0.307, 2.6, 0.09)
+material = SubResource("StandardMaterial3D_4ku1b")
+
+[node name="8" type="CSGBox3D" parent="." unique_id=126113108]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.003104, 2.7146575, -3.353419)
+use_collision = true
+size = Vector3(0.307, 2.6, 0.09)
+material = SubResource("StandardMaterial3D_4ku1b")
+
+[node name="9" type="CSGBox3D" parent="." unique_id=1789275712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.001728, 3.9693816, 2.4438972)
+use_collision = true
+size = Vector3(0.305, 0.09, 1.906123)
+material = SubResource("StandardMaterial3D_0bav0")
+
+[node name="10" type="CSGBox3D" parent="." unique_id=1724189585]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7853537, 1.4606904, 2.4438972)
+use_collision = true
+size = Vector3(0.73774904, 0.09, 1.906123)
+material = SubResource("StandardMaterial3D_0bav0")
+
+[node name="11" type="CSGBox3D" parent="." unique_id=1490501333]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.001728, 3.971145, -2.4449787)
+use_collision = true
+size = Vector3(0.305, 0.09, 1.906123)
+material = SubResource("StandardMaterial3D_0bav0")
+
+[node name="12" type="CSGBox3D" parent="." unique_id=1279709898]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7855062, 1.4589273, -2.4449787)
+use_collision = true
+size = Vector3(0.73744386, 0.09, 1.906123)
+material = SubResource("StandardMaterial3D_0bav0")

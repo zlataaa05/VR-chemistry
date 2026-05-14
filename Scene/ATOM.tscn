@@ -35,6 +35,12 @@ shape = SubResource("SphereShape3D_q1tj1")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1169688657]
 mesh = SubResource("SphereMesh_a6o3p")
 
+[node name="Label3D" type="Label3D" parent="." unique_id=1697813158]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18198219, 0)
+text = "O"
+font_size = 16
+outline_size = 8
+
 [node name="Area3D" type="Area3D" parent="." unique_id=753361264]
 collision_layer = 5
 collision_mask = 5

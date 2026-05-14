@@ -6,7 +6,11 @@
 height = 0.15
 radius = 0.03
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sxgpi"]
+albedo_color = Color(0, 0, 0, 1)
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_yf35g"]
+material = SubResource("StandardMaterial3D_sxgpi")
 top_radius = 0.03
 bottom_radius = 0.03
 height = 0.15
