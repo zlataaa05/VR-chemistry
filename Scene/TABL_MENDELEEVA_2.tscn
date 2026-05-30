@@ -1947,34 +1947,34 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mendeleeva_fixted/37/Area_37" unique_id=1525151534]
 shape = SubResource("BoxShape3D_v8wos")
 
-[node name="39" type="Label3D" parent="mendeleeva_fixted/38" parent_id_path=PackedInt32Array(220020341, 164699907) index="0" unique_id=1082391502]
+[node name="38" type="Label3D" parent="mendeleeva_fixted/38" parent_id_path=PackedInt32Array(220020341, 164699907) index="0" unique_id=1082391502]
 transform = Transform3D(1.3088227e-15, 2.99423e-08, 0.685, 0.68499994, -2.9942274e-08, -3.3881318e-21, 2.9942274e-08, 0.68499994, -2.99423e-08, 0.01577759, -0.0061130226, 0.006802775)
 pixel_size = 0.0002
 outline_modulate = Color(0, 0, 0, 0)
-text = "39
+text = "38
 "
 
-[node name="Y" type="Label3D" parent="mendeleeva_fixted/38" parent_id_path=PackedInt32Array(220020341, 164699907) index="1" unique_id=1278556564]
+[node name="Sr" type="Label3D" parent="mendeleeva_fixted/38" parent_id_path=PackedInt32Array(220020341, 164699907) index="1" unique_id=1278556564]
 transform = Transform3D(1.910685e-15, 4.371139e-08, 0.9999999, 0.9999998, -4.3711232e-08, -1.2705494e-21, 4.371112e-08, 1, -4.371138e-08, 0.01577759, -0.008764312, 0.0017874762)
 pixel_size = 0.0002
 outline_modulate = Color(1, 1, 1, 0)
-text = "Y"
+text = "Sr"
 outline_size = 2
 horizontal_alignment = 0
 
-[node name="Иттрий" type="Label3D" parent="mendeleeva_fixted/38" parent_id_path=PackedInt32Array(220020341, 164699907) index="2" unique_id=1312442873]
+[node name="Стронций" type="Label3D" parent="mendeleeva_fixted/38" parent_id_path=PackedInt32Array(220020341, 164699907) index="2" unique_id=1312442873]
 transform = Transform3D(1.910685e-15, 4.371139e-08, 0.9999999, 0.9999998, -4.371124e-08, -1.2705494e-21, 4.3711132e-08, 1, -4.371138e-08, 0.01577759, -0.008521318, -0.0031119771)
 pixel_size = 0.0002
 outline_modulate = Color(0, 0, 0, 0)
-text = "Иттрий"
+text = "Стронций"
 font_size = 14
 horizontal_alignment = 0
 
-[node name="88,906" type="Label3D" parent="mendeleeva_fixted/38" parent_id_path=PackedInt32Array(220020341, 164699907) index="3" unique_id=397310294]
+[node name="87,62" type="Label3D" parent="mendeleeva_fixted/38" parent_id_path=PackedInt32Array(220020341, 164699907) index="3" unique_id=397310294]
 transform = Transform3D(1.910685e-15, 4.371139e-08, 0.9999999, 0.9999998, -4.371124e-08, -1.2705494e-21, 4.3711132e-08, 1, -4.371138e-08, 0.01577759, -0.008509278, -0.006773301)
 pixel_size = 0.0002
 outline_modulate = Color(0, 0, 0, 0)
-text = "88,906"
+text = "87,62"
 font_size = 14
 horizontal_alignment = 0
 

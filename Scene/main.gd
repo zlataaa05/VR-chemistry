@@ -19,6 +19,9 @@ extends Node3D
 var atoms: Array = []  # Список всех атомов
 var links: Dictionary = {}  # Словарь существующих связей (ключ: "id1_id2")
 
+var atom_bond_count: Dictionary = {}  # instance_id -> текущее количество связей
+var atom_valence: Dictionary = {}  # instance_id -> максимальная валентность
+
 var is_aiming_at_table_cell: bool = false	# флаг - наведена ли указка на таблицу
 var current_hit_cell: Area3D = null  # текущая ячейка, на которую наведена указка
 var current_hit_point: Vector3 = Vector3.ZERO	# текущая точка попадания указки, по умолчанию ноль
@@ -226,7 +229,19 @@ func _spawn_atom_from_cell(cell_area: Area3D) -> void:
 	_apply_atom_color(atom_instance, atom_data["color"])
 	
 	# Устанавливаем символ атома на Label3D
-	_set_atom_label(atom_instance, atom_data["symbol"])
+	var label = _set_atom_label(atom_instance, atom_data["symbol"])
+	
+	if atom_instance.has_method("set_atom_data"):
+		atom_instance.set_atom_data(atom_data)
+	
+	# Сохраняем валентность атома
+	var instance_id = atom_instance.get_instance_id()
+	atom_valence[instance_id] = atom_data["valence"]
+	atom_bond_count[instance_id] = 0
+	
+	# Сохраняем ссылку на Label3D
+	if label != null:
+		atom_labels[instance_id] = label
 	
 	if atom_instance.has_method("set_atom_data"):
 		atom_instance.set_atom_data(atom_data)
@@ -235,6 +250,7 @@ func _spawn_atom_from_cell(cell_area: Area3D) -> void:
 	atoms.append(atom_instance)
 	
 	print("Создан атом: ", atom_data["name"], " (", atom_data["symbol"], ")")
+	print("Валентность: ", atom_data["valence"])
 	print("Всего атомов: ", atoms.size())
 	
 func _extract_id_from_area_name(area_name: String) -> int:
@@ -302,7 +318,48 @@ func _find_mesh_instance(node: Node) -> MeshInstance3D:
 		if result:
 			return result
 	return null
+
+func _can_create_bond(atom1: Node3D, atom2: Node3D) -> bool:
+	# Проверяем, могут ли атомы образовать связь с учетом валентности
+	var atom1_id = atom1.get_instance_id()
+	var atom2_id = atom2.get_instance_id()
 	
+	# Получаем текущее количество связей и максимальную валентность
+	var atom1_bonds = atom_bond_count.get(atom1_id, 0)
+	var atom2_bonds = atom_bond_count.get(atom2_id, 0)
+	var atom1_max = atom_valence.get(atom1_id, 0)
+	var atom2_max = atom_valence.get(atom2_id, 0)
+	
+	# Проверяем, не превысит ли новая связь валентность
+	if atom1_bonds >= atom1_max:
+		print("Атом ", atom1.name, " уже достиг максимальной валентности (", atom1_max, ")")
+		return false
+	
+	if atom2_bonds >= atom2_max:
+		print("Атом ", atom2.name, " уже достиг максимальной валентности (", atom2_max, ")")
+		return false
+	
+	return true
+
+func _add_bond_count(atom1: Node3D, atom2: Node3D):
+	# Увеличиваем счетчик связей для обоих атомов
+	var atom1_id = atom1.get_instance_id()
+	var atom2_id = atom2.get_instance_id()
+	
+	atom_bond_count[atom1_id] = atom_bond_count.get(atom1_id, 0) + 1
+	atom_bond_count[atom2_id] = atom_bond_count.get(atom2_id, 0) + 1
+	
+	print("Связи атома: ", atom_bond_count[atom1_id], "/", atom_valence[atom1_id])
+	print("Связи атома: ", atom_bond_count[atom2_id], "/", atom_valence[atom2_id])
+
+func _remove_bond_count(atom1: Node3D, atom2: Node3D):
+	# Уменьшаем счетчик связей для обоих атомов
+	var atom1_id = atom1.get_instance_id()
+	var atom2_id = atom2.get_instance_id()
+	
+	atom_bond_count[atom1_id] = max(0, atom_bond_count.get(atom1_id, 0) - 1)
+	atom_bond_count[atom2_id] = max(0, atom_bond_count.get(atom2_id, 0) - 1)
+
 func _update_all_links():
 	# Проверяем все пары атомов
 	for i in range(atoms.size()):
@@ -317,9 +374,13 @@ func _update_all_links():
 			var link_key = str(atom1.get_instance_id()) + "_" + str(atom2.get_instance_id())
 			
 			if distance < link_length:
-				# Если связи нет - создаем
+				# Если связи нет - проверяем валентность перед созданием
 				if not links.has(link_key):
-					_create_link(atom1, atom2, link_key)
+					if _can_create_bond(atom1, atom2):
+						_create_link(atom1, atom2, link_key)
+					else:
+						# Связь не может быть создана из-за ограничений валентности
+						pass
 			else:
 				# Если связь есть и расстояние больше - удаляем
 				if links.has(link_key):
@@ -358,6 +419,9 @@ func _create_link(atom1: Node3D, atom2: Node3D, link_key: String):
 		"atom2": atom2
 	}
 	
+	# Увеличиваем счетчики связей
+	_add_bond_count(atom1, atom2)
+	
 	print("Создана связь между атомами")
 
 func _update_link_transform(link_instance: Node3D, atom1: Node3D, atom2: Node3D):
@@ -392,6 +456,9 @@ func _update_link_transform(link_instance: Node3D, atom1: Node3D, atom2: Node3D)
 func _remove_link(link_key: String):
 	if links.has(link_key):
 		var link_data = links[link_key]
+		# Уменьшаем счетчики связей перед удалением
+		if is_instance_valid(link_data["atom1"]) and is_instance_valid(link_data["atom2"]):
+			_remove_bond_count(link_data["atom1"], link_data["atom2"])
 		if is_instance_valid(link_data["instance"]):
 			link_data["instance"].queue_free()
 		links.erase(link_key)
@@ -403,6 +470,38 @@ func _remove_all_links():
 		if is_instance_valid(link_data["instance"]):
 			link_data["instance"].queue_free()
 	links.clear()
+	# Очищаем счетчики связей
+	atom_bond_count.clear()
+
+# Функция для удаления атома и всех его связей
+func _remove_atom(atom: Node3D):
+	if not is_instance_valid(atom):
+		return
+	
+	var atom_id = atom.get_instance_id()
+	
+	# Находим и удаляем все связи с этим атомом
+	var keys_to_remove = []
+	for link_key in links.keys():
+		var link_data = links[link_key]
+		if link_data["atom1"] == atom or link_data["atom2"] == atom:
+			keys_to_remove.append(link_key)
+	
+	for key in keys_to_remove:
+		_remove_link(key)
+	
+	# Удаляем атом из списка
+	atoms.erase(atom)
+	
+	# Удаляем данные о валентности и связях
+	atom_bond_count.erase(atom_id)
+	atom_valence.erase(atom_id)
+	atom_labels.erase(atom_id)
+	
+	# Удаляем сам атом
+	atom.queue_free()
+	
+	print("Атом удален")
 
 func _update_all_labels_rotation():
 	if not camera or not is_instance_valid(camera):
