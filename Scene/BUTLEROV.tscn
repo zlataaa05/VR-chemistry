@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://cs4xn12f56dwg"]
+
+[ext_resource type="Texture2D" uid="uid://bdf3vyus7oqxj" path="res://butlerov.jpg" id="1_4lb3j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsta6"]
+albedo_color = Color(0.34117648, 0.22352941, 0.16470589, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1v0dx"]
+albedo_color = Color(0.34117648, 0.22352941, 0.16470589, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxqgq"]
+albedo_color = Color(0.34117648, 0.22352941, 0.16470589, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b3b30"]
+albedo_color = Color(0.34117648, 0.22352941, 0.16470589, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kybww"]
+albedo_texture = ExtResource("1_4lb3j")
+
+[sub_resource type="QuadMesh" id="QuadMesh_sa2ir"]
+material = SubResource("StandardMaterial3D_kybww")
+size = Vector2(0.775, 1)
+
+[node name="Butlerov" type="Node3D" unique_id=725361213]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=2049308099]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.028588593, -0.39181447, 0, 0)
+size = Vector3(0.03, 1.03, 1)
+material = SubResource("StandardMaterial3D_wsta6")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1210919305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.028588593, 0.392, 0, 0)
+size = Vector3(0.03, 1.03, 1)
+material = SubResource("StandardMaterial3D_1v0dx")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1752070004]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 0.028588593, 0, 0.5005875, 0)
+size = Vector3(0.03, 0.81, 1)
+material = SubResource("StandardMaterial3D_mxqgq")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=2109889121]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 0.028588593, 0, -0.501, 0)
+size = Vector3(0.03, 0.81, 1)
+material = SubResource("StandardMaterial3D_b3b30")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=74625418]
+mesh = SubResource("QuadMesh_sa2ir")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=410070907]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.377, 0.002)
+pixel_size = 0.001
+text = "Александр Михайлович Бутлеров
+1828 - 1886 гг"

@@ -52,7 +52,6 @@ material = SubResource("StandardMaterial3D_gk14i")
 script = SubResource("GDScript_pe3wl")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1468837433]
-world_scale = 1.5
 
 [node name="Camera1" type="XRCamera3D" parent="XROrigin3D" unique_id=1045648068]
 transform = Transform3D(1, 0, 0, 0, 0.9716111, 0.23658381, 0, -0.23658381, 0.9716111, 0, 0.9981005, 0)

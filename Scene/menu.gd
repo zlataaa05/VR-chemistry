@@ -24,11 +24,19 @@ var is_send_hovered: bool = false
 var is_lern_hovered: bool = false
 var is_exit_hovered: bool = false
 
+# Оригинальные цвета и свечение кнопок (для возврата)
+var original_send_material: StandardMaterial3D
+var original_lern_material: StandardMaterial3D
+var original_exit_material: StandardMaterial3D
+
 func _ready():
 	# Находим SceneManager
 	scene_manager = get_node_or_null("/root/SceneManager")
 	if not scene_manager:
 		print("SceneManager не найден")
+	
+	# Сохраняем оригинальные материалы кнопок
+	_save_original_materials()
 	
 	# Настройка сигналов для кнопок
 	_setup_button_signals()
@@ -37,6 +45,17 @@ func _ready():
 	_setup_area_signals()
 	
 	print("Меню готово к взаимодействию")
+
+func _save_original_materials():
+	# Сохраняем оригинальные материалы для каждой кнопки
+	if button_send and button_send.material:
+		original_send_material = button_send.material.duplicate()
+	
+	if button_lern and button_lern.material:
+		original_lern_material = button_lern.material.duplicate()
+	
+	if button_exit and button_exit.material:
+		original_exit_material = button_exit.material.duplicate()
 
 func _setup_button_signals():
 	# Настройка сигналов для Area3D (для взаимодействия с руками)
@@ -97,6 +116,38 @@ func _update_hover_timers(delta):
 	else:
 		exit_timer = 0.0
 
+# Функция для изменения цвета и свечения кнопки
+func _set_button_glow(button: CSGBox3D, color: Color, emission_color: Color):
+	if button and button.material:
+		# Создаем новый материал или используем существующий
+		var material: StandardMaterial3D
+		if button.material is StandardMaterial3D:
+			material = button.material
+		else:
+			material = StandardMaterial3D.new()
+			button.material = material
+		
+		# Устанавливаем цвет
+		material.albedo_color = color
+		
+		# Устанавливаем свечение
+		material.emission_enabled = true
+		material.emission = emission_color
+		material.emission_energy_multiplier = 1.0
+
+# Функция для сброса цвета и свечения кнопки
+func _reset_button_glow(button: CSGBox3D, original_material: StandardMaterial3D):
+	if button and original_material:
+		# Восстанавливаем оригинальный материал
+		if button.material is StandardMaterial3D:
+			button.material.albedo_color = original_material.albedo_color
+			button.material.emission_enabled = original_material.emission_enabled
+			button.material.emission = original_material.emission
+			button.material.emission_energy_multiplier = original_material.emission_energy_multiplier
+		else:
+			button.material = original_material.duplicate()
+
+
 # Функция для проверки, является ли объект рукой
 func _is_hand(node: Node) -> bool:
 	if node.name.to_lower().contains("hand"):
@@ -126,11 +177,13 @@ func _on_send_area_entered(area: Area3D):
 	if _is_hand(area):
 		print("Область руки вошла в зону кнопки Send")
 		is_send_hovered = true
+		_set_button_glow(button_send, Color(0, 0.686, 0), Color(0, 0.808, 0.259))  # 00af00 и 00ce42
 
 func _on_send_area_exited(area: Area3D):
 	if _is_hand(area):
 		print("Область руки вышла из зоны кнопки Send")
 		is_send_hovered = false
+		_reset_button_glow(button_send, original_send_material)
 
 func _on_send_button_activated():
 	print("Кнопка Send активирована. Переход на MAIN.tscn...")
@@ -150,11 +203,13 @@ func _on_lern_area_entered(area: Area3D):
 	if _is_hand(area):
 		print("Область руки вошла в зону кнопки Lern")
 		is_lern_hovered = true
+		_set_button_glow(button_lern, Color(0, 0.686, 0), Color(0, 0.808, 0.259))  # 00af00 и 00ce42
 
 func _on_lern_area_exited(area: Area3D):
 	if _is_hand(area):
 		print("Область руки вышла из зоны кнопки Lern")
 		is_lern_hovered = false
+		_reset_button_glow(button_lern, original_lern_material)
 
 func _on_lern_button_activated():
 	print("Кнопка Lern активирована. Переход на MAIN.tscn...")
@@ -174,11 +229,13 @@ func _on_exit_area_entered(area: Area3D):
 	if _is_hand(area):
 		print("Область руки вошла в зону кнопки Exit")
 		is_exit_hovered = true
+		_set_button_glow(button_exit, Color(0, 0.686, 0), Color(0, 0.808, 0.259))  # 00af00 и 00ce42
 
 func _on_exit_area_exited(area: Area3D):
 	if _is_hand(area):
 		print("Область руки вышла из зоны кнопки Exit")
 		is_exit_hovered = false
+		_reset_button_glow(button_exit, original_exit_material)
 
 func _on_exit_button_activated():
 	print("Кнопка Exit активирована. Выход из приложения...")

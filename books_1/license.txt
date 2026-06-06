@@ -1,0 +1,11 @@
+Model Information:
+* title:	Books
+* source:	https://sketchfab.com/3d-models/books-62fc2898df55483f87461a8f12a0113f
+* author:	igor-tkachenko (https://sketchfab.com/igor-tkachenko)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Books" (https://sketchfab.com/3d-models/books-62fc2898df55483f87461a8f12a0113f) by igor-tkachenko (https://sketchfab.com/igor-tkachenko) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

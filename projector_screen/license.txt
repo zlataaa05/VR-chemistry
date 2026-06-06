@@ -1,0 +1,11 @@
+Model Information:
+* title:	Projector
+* source:	https://sketchfab.com/3d-models/projector-33d07c52e76845b5b5767471db9fe7e2
+* author:	Bryan Choo (https://sketchfab.com/bryanchoo1997)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Projector" (https://sketchfab.com/3d-models/projector-33d07c52e76845b5b5767471db9fe7e2) by Bryan Choo (https://sketchfab.com/bryanchoo1997) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

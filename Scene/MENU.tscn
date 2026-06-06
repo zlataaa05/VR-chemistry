@@ -26,9 +26,9 @@ emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kebdx"]
-albedo_color = Color(0, 0.6862745, 0, 1)
+albedo_color = Color(0.7921569, 1, 1, 1)
 emission_enabled = true
-emission = Color(1.9011646e-06, 0.52361137, 0.26036316, 1)
+emission = Color(0.18039216, 0.7137255, 0.7137255, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0uosn"]
 size = Vector3(0.65, 0.05, 0.7)
@@ -61,12 +61,12 @@ size = Vector3(2.1, 0.13, 1)
 material = SubResource("StandardMaterial3D_0uosn")
 
 [node name="ButtonSend" type="CSGBox3D" parent="Panel" unique_id=283010847]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, -1.4901161e-08, 0, 0, 0.99999994, -0.6735435, 0.052000046, 0.015000105)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, -1.4901161e-08, 0, 0, 0.99999994, -0.6697622, 0.052000046, 0.015000105)
 size = Vector3(0.65, 0.07, 0.7)
 material = SubResource("StandardMaterial3D_kebdx")
 
 [node name="LabelSend" type="Label3D" parent="Panel/ButtonSend" unique_id=382934269]
-transform = Transform3D(0.7567361, 0, 0, 0, -5.9604645e-08, 0.99999946, 0, -0.9999991, 0, 0, 0.036323667, 3.5762787e-07)
+transform = Transform3D(0.69174254, 0, 0, 0, -5.9604645e-08, 0.99999934, 0, -0.99999905, 2.9802322e-08, 0, 0.036323607, 4.7683716e-07)
 pixel_size = 0.003
 text = "Начать 
 в режиме 
@@ -85,7 +85,7 @@ size = Vector3(0.65, 0.07, 0.7)
 material = SubResource("StandardMaterial3D_73v4x")
 
 [node name="LabelLern" type="Label3D" parent="Panel/ButtonLern" unique_id=2089417229]
-transform = Transform3D(0.76490796, 0, 0, 0, -5.9604645e-08, 0.99999946, 0, -0.9999991, 0, 0, 0.036323667, 2.3841858e-07)
+transform = Transform3D(0.6813985, 0, 0, 0, -5.2154064e-08, 0.99999934, 0, -0.99999905, 2.9802322e-08, 0, 0.036323607, 4.7683716e-07)
 pixel_size = 0.003
 text = "Начать 
 в режиме 

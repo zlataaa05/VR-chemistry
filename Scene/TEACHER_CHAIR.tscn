@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c73mgextsjuf8"]
+
+[ext_resource type="PackedScene" uid="uid://dip7b13rphyna" path="res://chair/source/modern_chair.fbx" id="1_6l5hv"]
+
+[node name="Teacher_chair" type="Node3D" unique_id=718612315]
+
+[node name="modern_chair" parent="." unique_id=1770518173 instance=ExtResource("1_6l5hv")]

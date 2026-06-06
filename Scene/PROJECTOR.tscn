@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bkoe5xhrrrp8m"]
+
+[ext_resource type="PackedScene" uid="uid://bgamdg8x1xhaf" path="res://projector/scene.gltf" id="1_1t5sb"]
+
+[node name="Projector" type="Node3D" unique_id=289875662]
+
+[node name="Sketchfab_Scene" parent="." unique_id=1533046357 instance=ExtResource("1_1t5sb")]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)

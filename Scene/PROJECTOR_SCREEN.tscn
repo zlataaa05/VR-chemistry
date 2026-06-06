@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ccnuejlj4virh"]
+
+[ext_resource type="PackedScene" uid="uid://tp0am501iyrc" path="res://projector_screen/scene.gltf" id="1_e8k6p"]
+
+[node name="Projector_screen" type="Node3D" unique_id=302518063]
+
+[node name="Sketchfab_Scene" parent="." unique_id=1433379604 instance=ExtResource("1_e8k6p")]

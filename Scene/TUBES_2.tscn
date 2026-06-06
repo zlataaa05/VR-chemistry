@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cnt2iwt7u60ag"]
+
+[ext_resource type="PackedScene" uid="uid://dpx3b26a5et4w" path="res://test_tubes_2/source/TUBES.glb" id="1_nktw8"]
+
+[node name="Tubes_2" type="Node3D" unique_id=1948426983]
+transform = Transform3D(0.315, 0, 0, 0, 0.315, 0, 0, 0, 0.315, 0, 0, 0)
+
+[node name="TUBES" parent="." unique_id=463709479 instance=ExtResource("1_nktw8")]
+transform = Transform3D(0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0)

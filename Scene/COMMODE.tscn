@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://6di3myetsa4n"]
+
+[ext_resource type="PackedScene" uid="uid://bg7w0ol7resq6" path="res://commode/scene.gltf" id="1_ch5y1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ch5y1"]
+transparency = 1
+albedo_color = Color(0.81960785, 1, 1, 0.22745098)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ch5y1"]
+material = SubResource("StandardMaterial3D_ch5y1")
+size = Vector3(0.46, 0.58, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rlod3"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ch5y1"]
+material = SubResource("StandardMaterial3D_rlod3")
+top_radius = 0.015
+bottom_radius = 0.015
+height = 0.015
+
+[node name="Commode" type="Node3D" unique_id=231089744]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Sketchfab_Scene" parent="." unique_id=1572151697 instance=ExtResource("1_ch5y1")]
+
+[node name="Glass" type="MeshInstance3D" parent="." unique_id=1767992504]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25735053, 0.4277063, 1.1249149e-08)
+mesh = SubResource("BoxMesh_ch5y1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2110875961]
+transform = Transform3D(1, -4.3711236e-08, 4.359085e-08, 4.3711232e-08, 0.0027576433, -0.9999963, 4.3590855e-08, 0.9999963, 0.0027576433, 0.43616277, 0.42432398, 0.0045946282)
+mesh = SubResource("CylinderMesh_ch5y1")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=275559759]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7467346, 0.37753296, -0.19592285)
+visible = false
+use_collision = true
+size = Vector3(1.527771, 0.75494385, 0.40649414)
+
+[editable path="Sketchfab_Scene"]

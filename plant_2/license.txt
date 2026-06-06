@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pothos Plant
+* source:	https://sketchfab.com/3d-models/pothos-plant-175142c4942b42169455eb20c4033c9d
+* author:	Blizzy (https://sketchfab.com/jeffbas)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pothos Plant" (https://sketchfab.com/3d-models/pothos-plant-175142c4942b42169455eb20c4033c9d) by Blizzy (https://sketchfab.com/jeffbas) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
