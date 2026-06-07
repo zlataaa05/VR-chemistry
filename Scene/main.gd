@@ -30,20 +30,19 @@ var current_hit_point: Vector3 = Vector3.ZERO	# текущая точка поп
 # Данные об атомах из JSON
 var atoms_data: Dictionary = {}  # id -> данные атома
 
-# Переменные для управления флагами
+# Данные для управления молекулами
 var original_flag_position: Vector3 = Vector3.ZERO  # исходная позиция флага
-var original_flag_rotation: Vector3 = Vector3.ZERO  # исходная позиция флага
-var current_flag_instance: Node3D = null  # текущий активный флаг
-var is_flag_moved: bool = false  # флаг, был ли перемещен текущий флаг
+var original_flag_rotation: Vector3 = Vector3.ZERO  # исходная ротация флага
+var active_molecules: Array = []  # Список активных молекул (каждая молекула - словарь с данными)
 
 # Словарь для хранения Label3D каждого атома
 var atom_labels: Dictionary = {}  # instance_id -> Label3D
 
-# Переменные для отслеживания прикрепления флага к молекуле
-var is_flag_attached: bool = false  # прикреплен ли флаг к молекуле
-var attached_molecule_nodes: Array = []  # список узлов, входящих в молекулу
-var original_molecule_parents: Dictionary = {}  # оригинаальный родитель для каждого узла молекулы
-var active_held_flag: Node3D = null  # Флаг, который сейчас в руке у игрока
+# Список всех флагов в сцене
+var all_flags: Array = []
+
+# Флаг для предотвращения множественного спавна
+var is_spawning_enabled: bool = true
 
 func _ready():
 	# Загружаем данные об атомах
@@ -63,9 +62,10 @@ func _ready():
 	if flag:
 		original_flag_position = flag.global_position
 		original_flag_rotation = flag.rotation
-		current_flag_instance = flag
 		print("Исходная позиция флага: ", original_flag_position)
 		print("Исходная ротация флага: ", original_flag_rotation)
+		# Инициализируем начальный флаг
+		_initialize_flag(flag)
 	
 	# Подключаем сигналы от указки (XRToolsPickable)
 	if pointer:
@@ -81,13 +81,27 @@ func _ready():
 		if pointer.has_signal("action_pressed"):
 			pointer.action_pressed.connect(_on_pointer_action_pressed)
 	
-	# Подключаем сигналы для текущего флага
-	_connect_flag_signals(flag)
-	
 	print("Система готова")
 
+func _initialize_flag(flag_instance: Node3D):
+	"""Инициализирует новый флаг, подключает сигналы и добавляет в список"""
+	# Сохраняем оригинальные позицию и ротацию в метаданные
+	if not flag_instance.has_meta("original_position"):
+		flag_instance.set_meta("original_position", flag_instance.global_position)
+		flag_instance.set_meta("original_rotation", flag_instance.rotation)
+		flag_instance.set_meta("replacement_created", false)
+		flag_instance.set_meta("spawned", false)  # Отмечаем, что флаг только что создан
+	
+	# Подключаем сигналы
+	_connect_flag_signals(flag_instance)
+	
+	# Добавляем в список всех флагов, если еще не добавлен
+	if flag_instance not in all_flags:
+		all_flags.append(flag_instance)
+		print("Флаг инициализирован: ", flag_instance.name, " на позиции ", flag_instance.global_position)
+
 func _connect_flag_signals(flag_instance: Node3D):
-	# Сигнал для отслеживания момента отпускания флага
+	# Проверяем, не подключены ли уже сигналы
 	if flag_instance.has_signal("dropped"):
 		if not flag_instance.dropped.is_connected(_on_flag_dropped):
 			flag_instance.dropped.connect(_on_flag_dropped)
@@ -97,18 +111,24 @@ func _connect_flag_signals(flag_instance: Node3D):
 		if not flag_instance.picked_up.is_connected(_on_flag_picked_up):
 			flag_instance.picked_up.connect(_on_flag_picked_up)
 
-func _on_flag_picked_up(_pickable):
-	# Запоминаем, какой флаг взят в руку
-	active_held_flag = _pickable
-	print("[FLAG] Флаг взят в руку: ", _pickable.name)
+func _on_flag_picked_up(pickable):
+	print("Флаг взят в руку: ", pickable.name)
+	# Когда флаг берут в руку, сбрасываем флаг spawned, так как теперь он перемещается
+	if pickable.has_meta("spawned"):
+		pickable.set_meta("spawned", false)
 
-func _on_flag_dropped(_pickable):
+func _on_flag_dropped(pickable):
 	# Флаг отпущен - проверяем, нужно ли прикрепить молекулу
-	# Используем тот флаг, который отпустили
-	if not is_flag_attached:
-		_check_and_attach_molecule_for_flag(_pickable)
-	
-	active_held_flag = null
+	# Используем флаг, который отпустили
+	if not _is_flag_attached_to_molecule(pickable):
+		_check_and_attach_molecule_for_flag(pickable)
+
+func _is_flag_attached_to_molecule(flag_instance: Node3D) -> bool:
+	# Проверяем, прикреплена ли уже какая-то молекула к этому флагу
+	for molecule in active_molecules:
+		if molecule["flag"] == flag_instance:
+			return true
+	return false
 
 func _load_atoms_data():
 	# Открываем JSON файл
@@ -138,9 +158,8 @@ func _process(delta):
 	_update_all_links()
 	# Обновляем транформ всех связей
 	_update_existing_links_transforms()
-	# Проверяем, не был ли перемещен флаг (только если не прикреплен)
-	if not is_flag_attached:
-		_check_flag_movement()
+	# Проверяем все флаги на перемещение
+	_check_all_flags_movement()
 	# Обновляем повороты всех Label3D, чтобы они смотрели на игрока
 	_update_all_labels_rotation()
 	
@@ -156,36 +175,70 @@ func _handle_raycast():
 			is_aiming_at_table_cell = true
 			current_hit_cell = collider
 			current_hit_point = raycast.get_collision_point()
-			print("Указка наведена на ячейку: ", collider.name)
 			return
 	
 	is_aiming_at_table_cell = false
 	current_hit_cell = null
+
+func _check_all_flags_movement():
+	# Проверяем все флаги в сцене
+	# Используем копию списка, чтобы избежать проблем при изменении во время итерации
+	var flags_to_check = all_flags.duplicate()
 	
-func _check_flag_movement():
-	# Проверяем, существует ли текущий флаг
-	if not current_flag_instance or not is_instance_valid(current_flag_instance):
-		return
-	
-	# Проверяем, был ли флаг перемещен с исходной позиции и ротации
-	var current_position = current_flag_instance.global_position
-	var current_rotation = current_flag_instance.rotation
-	
-	var distance_moved = current_position.distance_to(original_flag_position)
-	
-	# Если флаг переместился больше чем на допустимую погрешность и еще не создали новый флаг
-	if distance_moved > 0.5 and not is_flag_moved:
-		is_flag_moved = true
-		_create_new_flag_at_original_position()
-		print("Флаг был перемещен или повернут. Создан новый флаг на исходной позиции и ротации")
+	for flag_instance in flags_to_check:
+		if not is_instance_valid(flag_instance):
+			# Удаляем невалидный флаг из списка
+			all_flags.erase(flag_instance)
+			continue
 		
+		# Проверяем, не прикреплена ли уже молекула к этому флагу
+		if _is_flag_attached_to_molecule(flag_instance):
+			continue
+		
+		# Проверяем, был ли флаг перемещен с исходной позиции
+		# Для этого храним позицию для каждого флага
+		if not flag_instance.has_meta("original_position"):
+			flag_instance.set_meta("original_position", flag_instance.global_position)
+			flag_instance.set_meta("original_rotation", flag_instance.rotation)
+			flag_instance.set_meta("replacement_created", false)
+			flag_instance.set_meta("spawned", false)
+			continue
+		
+		# Пропускаем только что созданные флаги, чтобы они не создавали новые флаги сразу
+		if flag_instance.has_meta("spawned") and flag_instance.get_meta("spawned") == true:
+			# Если флаг был только что создан, даем ему время
+			continue
+		
+		var original_pos = flag_instance.get_meta("original_position")
+		var current_pos = flag_instance.global_position
+		var distance_moved = current_pos.distance_to(original_pos)
+		
+		# Если флаг переместился больше чем на допустимую погрешность и еще не создали новый флаг
+		if distance_moved > 0.5 and not flag_instance.get_meta("replacement_created"):
+			flag_instance.set_meta("replacement_created", true)
+			_create_new_flag_at_original_position()
+			print("Флаг ", flag_instance.name, " был перемещен. Создан новый флаг на исходной позиции")
+
 func _create_new_flag_at_original_position():
 	# Создаем новый экземпляр флага
 	if not flag_scene:
 		print("Сцена флага не загружена")
 		return
 	
+	if original_flag_position == Vector3.ZERO:
+		print("Исходная позиция флага не задана")
+		return
+	
+	# Временно отключаем спавн, чтобы избежать каскадного создания
+	if not is_spawning_enabled:
+		return
+	
+	is_spawning_enabled = false
+	
 	var new_flag = flag_scene.instantiate()
+	
+	# Устанавливаем уникальное имя для флага
+	new_flag.name = "Flag_" + str(randi())
 	
 	# Устанавливаем позицию на исходную
 	new_flag.global_position = original_flag_position
@@ -193,15 +246,22 @@ func _create_new_flag_at_original_position():
 	# Устанавливаем ротацию на исходную
 	new_flag.rotation = original_flag_rotation
 	
+	# Отмечаем, что этот флаг был только что создан
+	new_flag.set_meta("spawned", true)
+	new_flag.set_meta("replacement_created", false)
+	
 	# Добавляем в сцену
 	add_child(new_flag)
 	
-	# Подключаем сигналы к новому флагу
-	_connect_flag_signals(new_flag)
+	# Инициализируем флаг
+	_initialize_flag(new_flag)
 	
-	# Оставляем старый флаг, который в руке у игрока
-	print("Создан новый флаг на позиции: ", original_flag_position)
-	print("С ротацией: ", original_flag_rotation)
+	print("Создан новый флаг '", new_flag.name, "' на исходной позиции: ", original_flag_position)
+	print("Всего флагов в сцене: ", all_flags.size())
+	
+	# Включаем спавн с небольшой задержкой
+	await get_tree().create_timer(0.5).timeout
+	is_spawning_enabled = true
 
 func _check_and_attach_molecule_for_flag(flag_instance: Node3D):
 	# Проверяем, есть ли атомы в сцене
@@ -213,13 +273,23 @@ func _check_and_attach_molecule_for_flag(flag_instance: Node3D):
 		print("Флаг не существует")
 		return
 	
-	# Находим ближайший атом к флагу
+	# Проверяем, не прикреплена ли уже молекула к этому флагу
+	if _is_flag_attached_to_molecule(flag_instance):
+		print("К этому флагу уже прикреплена молекула")
+		return
+	
+	# Находим ближайший атом к флагу, который не принадлежит другой молекуле
 	var closest_atom: Node3D = null
 	var min_distance = attach_distance
 	
 	for atom in atoms:
 		if not is_instance_valid(atom):
 			continue
+		
+		# Проверяем, не принадлежит ли атом уже другой молекуле
+		if _is_atom_part_of_molecule(atom):
+			continue
+			
 		var distance = flag_instance.global_position.distance_to(atom.global_position)
 		print("Расстояние до атома ", atom.name, ": ", distance)
 		if distance < min_distance:
@@ -237,7 +307,14 @@ func _check_and_attach_molecule_for_flag(flag_instance: Node3D):
 		else:
 			print("Не найдено узлов молекулы")
 	else:
-		print("Флаг слишком далеко от молекулы. Ближайшее расстояние: ", min_distance)
+		print("Нет доступных атомов для прикрепления. Ближайшее расстояние: ", min_distance)
+
+func _is_atom_part_of_molecule(atom: Node3D) -> bool:
+	# Проверяем, принадлежит ли атом уже какой-либо молекуле
+	for molecule in active_molecules:
+		if atom in molecule["atoms"]:
+			return true
+	return false
 
 func _get_molecule_nodes(start_atom: Node3D) -> Array:
 	var molecule_nodes = []
@@ -283,61 +360,117 @@ func _get_molecule_nodes(start_atom: Node3D) -> Array:
 	return molecule_nodes
 
 func _attach_molecule_to_flag(flag_instance: Node3D, molecule_nodes: Array):
-	if is_flag_attached:
-		print("Молекула уже прикреплена")
+	if _is_flag_attached_to_molecule(flag_instance):
+		print("К этому флагу уже прикреплена молекула")
 		return
 	
 	print("Прикрепление молекулы к флагу...")
 	print("Всего узлов для переподчинения: ", molecule_nodes.size())
 	
-	# Сохраняем оригинальных родителей и переподчиняем узлы
-	var success_count = 0
+	# Сохраняем информацию об атомах и их трансформациях
+	var atoms_transforms = []
+	var all_links = []
+	
+	# Сначала собираем все связи и атомы отдельно
 	for node in molecule_nodes:
 		if not is_instance_valid(node):
-			print("Невалидный узел")
 			continue
 		
-		# Сохраняем оригинального родителя
-		var old_parent = node.get_parent()
-		original_molecule_parents[node] = old_parent
+		if node in atoms:
+			# Сохраняем трансформацию атома
+			atoms_transforms.append({
+				"node": node,
+				"original_global_transform": node.global_transform,
+				"old_parent": node.get_parent()
+			})
+		else:
+			# Добавляем связь в список для удаления
+			all_links.append(node)
+	
+	# Удаляем все связи (они будут пересозданы заново)
+	for link_node in all_links:
+		if is_instance_valid(link_node):
+			# Удаляем из словаря links
+			var link_key_to_remove = null
+			for key in links.keys():
+				if links[key]["instance"] == link_node:
+					link_key_to_remove = key
+					break
+			if link_key_to_remove:
+				_remove_link(link_key_to_remove)
+			else:
+				link_node.queue_free()
+	
+	# Переподчиняем атомы флагу
+	for atom_data in atoms_transforms:
+		var atom = atom_data["node"]
+		var original_transform = atom_data["original_global_transform"]
+		var old_parent = atom_data["old_parent"]
 		
-		# Сохраняем глобальную позицию перед переподчинением
-		var old_global_transform = node.global_transform
-		
-		# Переподчиняем флагу
-		old_parent.remove_child(node)
-		flag_instance.add_child(node)
+		# Переподчиняем атому
+		old_parent.remove_child(atom)
+		flag_instance.add_child(atom)
 		
 		# Восстанавливаем глобальную трансформацию
-		node.global_transform = old_global_transform
-		
-		success_count += 1
-		print("Узел ", node.name, " переподчинён. Родитель был: ", old_parent.name, ", стал: ", flag_instance.name)
+		atom.global_transform = original_transform
 	
-	attached_molecule_nodes = molecule_nodes.duplicate()
-	is_flag_attached = true
-	current_flag_instance = flag_instance  # Запоминаем флаг, к которому прикрепили молекулу
+	# Принудительно обновляем все связи в следующем кадре
+	await get_tree().process_frame
+	
+	# Обновляем словари атомов
+	# Очищаем текущий список атомов и пересобираем его
+	atoms.clear()
+	_find_all_atoms_in_scene()
+	
+	# Сбрасываем счетчики связей для всех атомов
+	atom_bond_count.clear()
+	for atom in atoms:
+		var instance_id = atom.get_instance_id()
+		atom_bond_count[instance_id] = 0
+	
+	# Принудительно обновляем связи, чтобы они пересоздались
+	_update_all_links()
+	
+	# Сохраняем информацию о молекуле
+	var molecule_data = {
+		"flag": flag_instance,
+		"nodes": molecule_nodes,
+		"atoms": atoms_transforms  # Сохраняем атомы
+	}
+	
+	active_molecules.append(molecule_data)
 	
 	print("Молекула успешно прикреплена к флагу")
-	print("Переподчинено узлов: ", success_count, " из ", molecule_nodes.size())
-	print("Флаг: ", flag_instance.name)
-	print("Дочерние элементы флага после прикрепления:")
-	_debug_print_children_recursive(flag_instance, 0)
 
-func _debug_print_children_recursive(node: Node, indent_level: int):
-	var indent = ""
-	for i in range(indent_level):
-		indent += "  "
+func _find_all_atoms_in_scene():
+	atoms.clear()
+	_find_atoms_recursive(self)
+
+func _find_atoms_recursive(node: Node):
 	for child in node.get_children():
-		if child is Node3D:
-			print(indent + "- ", child.name, " (тип: ", child.get_class(), ", позиция: ", child.position, ")")
-		else:
-			print(indent + "- ", child.name, " (тип: ", child.get_class(), ")")
-		_debug_print_children_recursive(child, indent_level + 1)
+		if child.name == "ATOM" or child.get_instance_id() in atom_valence:
+			atoms.append(child)
+		_find_atoms_recursive(child)
 
-# Функция для проверки, прикреплена ли молекула
-func is_molecule_attached() -> bool:
-	return is_flag_attached
+# Функция для удаления молекулы 
+func _detach_molecule(molecule_data: Dictionary):
+	if not molecule_data["flag"] or not is_instance_valid(molecule_data["flag"]):
+		return
+	
+	var flag_instance = molecule_data["flag"]
+	
+	# Возвращаем узлы обратно в сцену
+	for node in molecule_data["nodes"]:
+		if is_instance_valid(node):
+			var old_parent = node.get_parent()
+			if old_parent == flag_instance:
+				flag_instance.remove_child(node)
+				add_child(node)
+				# Сохраняем глобальную трансформацию
+				node.global_transform = node.global_transform
+	
+	# Удаляем из списка активных молекул
+	active_molecules.erase(molecule_data)
 
 func _on_pointer_picked_up(_pickable):
 	print("Указка взята в руку")
@@ -359,21 +492,8 @@ func _on_pointer_action_pressed(_pickable):
 	if is_aiming_at_table_cell and current_hit_cell:
 		_spawn_atom_from_cell(current_hit_cell)	
 		
-func _is_player_hand(area: Area3D) -> bool:
-	var node_name = area.name.to_lower()
-	
-	if node_name.contains("hand"):
-		return true
-		
-	var parent = area.get_parent()
-	if parent and (parent.name.to_lower().contains("hand")):
-		return true
-		
-	return false
-	
 func _spawn_atom_from_cell(cell_area: Area3D) -> void:
 	# Извлекаем ID элемента из названия Area3D
-	# Ожидаемый формат: "area_1", "area_2", "area_3" и т.д.
 	var cell_name = cell_area.name
 	var atom_id = _extract_id_from_area_name(cell_name)
 	
@@ -420,41 +540,32 @@ func _spawn_atom_from_cell(cell_area: Area3D) -> void:
 	print("Всего атомов: ", atoms.size())
 	
 func _extract_id_from_area_name(area_name: String) -> int:
-	# Извлекаем число из названия "area_1", "area_2" и т.д.
 	var parts = area_name.split("_")
 	if parts.size() >= 2:
 		var id_str = parts[1]
-		# Если есть дополнительные подчеркивания, берем только цифры
 		var id_int = id_str.to_int()
 		if id_int > 0:
 			return id_int
 	return 0
 	
 func _apply_atom_color(atom_instance: Node3D, color_hex: String):
-	# Ищем MeshInstance3D в сцене атома
 	var mesh_instance = _find_mesh_instance(atom_instance)
 	if mesh_instance and mesh_instance is MeshInstance3D:
-		# Создаем новый материал или изменяем существующий
 		var material = StandardMaterial3D.new()
 		material.albedo_color = Color(color_hex)
 		
-		# Настройки глянца (металлический блеск)
 		material.metallic = 0.4
 		material.metallic_specular = 0.6
 		material.roughness = 0.15
-		material.reflectivity = 0.5 
 		
 		mesh_instance.material_override = material
 		print("Применен цвет: ", color_hex)
 		
-		
 func _set_atom_label(atom_instance: Node3D, symbol: String) -> Label3D:
-	# Ищем Label3D в сцене атома
 	var label_3d = _find_label_3d(atom_instance)
 	
 	if label_3d and label_3d is Label3D:
 		label_3d.text = symbol
-		# Включаем билборд эффект (текст всегда смотрит на камеру)
 		label_3d.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		print("Установлен символ на Label3D: ", symbol)
 		return label_3d
@@ -463,11 +574,9 @@ func _set_atom_label(atom_instance: Node3D, symbol: String) -> Label3D:
 		return null
 		
 func _find_label_3d(node: Node) -> Label3D:
-	# Сначала проверяем текущий узел
 	if node is Label3D:
 		return node
 	
-	# Рекурсивно ищем среди дочерних узлов
 	for child in node.get_children():
 		var result = _find_label_3d(child)
 		if result:
@@ -476,7 +585,6 @@ func _find_label_3d(node: Node) -> Label3D:
 	return null
 		
 func _find_mesh_instance(node: Node) -> MeshInstance3D:
-	# Рекурсивно ищем первый MeshInstance3D
 	if node is MeshInstance3D:
 		return node
 	for child in node.get_children():
@@ -486,17 +594,14 @@ func _find_mesh_instance(node: Node) -> MeshInstance3D:
 	return null
 
 func _can_create_bond(atom1: Node3D, atom2: Node3D) -> bool:
-	# Проверяем, могут ли атомы образовать связь с учетом валентности
 	var atom1_id = atom1.get_instance_id()
 	var atom2_id = atom2.get_instance_id()
 	
-	# Получаем текущее количество связей и максимальную валентность
 	var atom1_bonds = atom_bond_count.get(atom1_id, 0)
 	var atom2_bonds = atom_bond_count.get(atom2_id, 0)
 	var atom1_max = atom_valence.get(atom1_id, 0)
 	var atom2_max = atom_valence.get(atom2_id, 0)
 	
-	# Проверяем, не превысит ли новая связь валентность
 	if atom1_bonds >= atom1_max:
 		print("Атом ", atom1.name, " уже достиг максимальной валентности (", atom1_max, ")")
 		return false
@@ -508,18 +613,16 @@ func _can_create_bond(atom1: Node3D, atom2: Node3D) -> bool:
 	return true
 
 func _add_bond_count(atom1: Node3D, atom2: Node3D):
-	# Увеличиваем счетчик связей для обоих атомов
 	var atom1_id = atom1.get_instance_id()
 	var atom2_id = atom2.get_instance_id()
 	
 	atom_bond_count[atom1_id] = atom_bond_count.get(atom1_id, 0) + 1
 	atom_bond_count[atom2_id] = atom_bond_count.get(atom2_id, 0) + 1
 	
-	print("Связи атома: ", atom_bond_count[atom1_id], "/", atom_valence[atom1_id])
-	print("Связи атома: ", atom_bond_count[atom2_id], "/", atom_valence[atom2_id])
+	print("Связи атома1: ", atom_bond_count[atom1_id], "/", atom_valence[atom1_id])
+	print("Связи атома2: ", atom_bond_count[atom2_id], "/", atom_valence[atom2_id])
 
 func _remove_bond_count(atom1: Node3D, atom2: Node3D):
-	# Уменьшаем счетчик связей для обоих атомов
 	var atom1_id = atom1.get_instance_id()
 	var atom2_id = atom2.get_instance_id()
 	
@@ -527,7 +630,6 @@ func _remove_bond_count(atom1: Node3D, atom2: Node3D):
 	atom_bond_count[atom2_id] = max(0, atom_bond_count.get(atom2_id, 0) - 1)
 
 func _update_all_links():
-	# Проверяем все пары атомов
 	for i in range(atoms.size()):
 		for j in range(i + 1, atoms.size()):
 			var atom1 = atoms[i]
@@ -540,15 +642,10 @@ func _update_all_links():
 			var link_key = str(atom1.get_instance_id()) + "_" + str(atom2.get_instance_id())
 			
 			if distance < link_length:
-				# Если связи нет - проверяем валентность перед созданием
 				if not links.has(link_key):
 					if _can_create_bond(atom1, atom2):
 						_create_link(atom1, atom2, link_key)
-					else:
-						# Связь не может быть создана из-за ограничений валентности
-						pass
 			else:
-				# Если связь есть и расстояние больше - удаляем
 				if links.has(link_key):
 					_remove_link(link_key)
 					
@@ -556,15 +653,12 @@ func _update_existing_links_transforms():
 	for link_key in links.keys():
 		var link_data = links[link_key]
 		
-		# Проверяем, что все объекты еще существуют
 		if not is_instance_valid(link_data["instance"]) or \
 		   not is_instance_valid(link_data["atom1"]) or \
 		   not is_instance_valid(link_data["atom2"]):
-			# Если что-то уничтожено - удаляем связь
 			_remove_link(link_key)
 			continue
 		
-		# Обновляем трансформ связи
 		_update_link_transform(link_data["instance"], link_data["atom1"], link_data["atom2"])
 
 func _create_link(atom1: Node3D, atom2: Node3D, link_key: String):
@@ -575,54 +669,44 @@ func _create_link(atom1: Node3D, atom2: Node3D, link_key: String):
 	var link_instance = link.instantiate()
 	add_child(link_instance)
 	
-	# Обновляем позицию и поворот связи
 	_update_link_transform(link_instance, atom1, atom2)
 	
-	# Сохраняем связь
 	links[link_key] = {
 		"instance": link_instance,
 		"atom1": atom1,
 		"atom2": atom2
 	}
 	
-	# Увеличиваем счетчики связей
 	_add_bond_count(atom1, atom2)
 	
 	print("Создана связь между атомами")
 
 func _update_link_transform(link_instance: Node3D, atom1: Node3D, atom2: Node3D):
-	# Вычисляем позицию между атомами
 	var mid_point = (atom1.global_position + atom2.global_position) / 2
 	link_instance.global_position = mid_point
 	
-	# Вычисляем направление и поворот
 	var direction = atom2.global_position - atom1.global_position
 	var distance = direction.length()
 	
-	# Защита от нулевого вектора
 	if distance < 0.001:
 		return
 	
-	# Масштабируем цилиндр по нужной длине
 	var cylinder_node = null
 	if link_instance is CSGCylinder3D:
 		cylinder_node = link_instance
 	else:
-		# Если это не CSGCylinder3D, пытаемся найти дочерний CSGCylinder3D
 		cylinder_node = link_instance.find_child("CSGCylinder3D", true, false)
 	
 	if cylinder_node:
 		cylinder_node.height = distance
 	var target_direction = direction.normalized()
 	
-	# Вычисляем угол между осью Y и нужным направлением
 	var rotation_quat = Quaternion(Vector3.UP, target_direction)
 	link_instance.quaternion = rotation_quat
 
 func _remove_link(link_key: String):
 	if links.has(link_key):
 		var link_data = links[link_key]
-		# Уменьшаем счетчики связей перед удалением
 		if is_instance_valid(link_data["atom1"]) and is_instance_valid(link_data["atom2"]):
 			_remove_bond_count(link_data["atom1"], link_data["atom2"])
 		if is_instance_valid(link_data["instance"]):
@@ -636,17 +720,14 @@ func _remove_all_links():
 		if is_instance_valid(link_data["instance"]):
 			link_data["instance"].queue_free()
 	links.clear()
-	# Очищаем счетчики связей
 	atom_bond_count.clear()
 
-# Функция для удаления атома и всех его связей
 func _remove_atom(atom: Node3D):
 	if not is_instance_valid(atom):
 		return
 	
 	var atom_id = atom.get_instance_id()
 	
-	# Находим и удаляем все связи с этим атомом
 	var keys_to_remove = []
 	for link_key in links.keys():
 		var link_data = links[link_key]
@@ -656,15 +737,12 @@ func _remove_atom(atom: Node3D):
 	for key in keys_to_remove:
 		_remove_link(key)
 	
-	# Удаляем атом из списка
 	atoms.erase(atom)
 	
-	# Удаляем данные о валентности и связях
 	atom_bond_count.erase(atom_id)
 	atom_valence.erase(atom_id)
 	atom_labels.erase(atom_id)
 	
-	# Удаляем сам атом
 	atom.queue_free()
 	
 	print("Атом удален")
@@ -673,10 +751,8 @@ func _update_all_labels_rotation():
 	if not camera or not is_instance_valid(camera):
 		return
 	
-	# Получаем позицию камеры игрока
 	var camera_position = camera.global_position
 	
-	# Обновляем поворот для каждого атома
 	for atom in atoms:
 		if not is_instance_valid(atom):
 			continue
@@ -685,17 +761,10 @@ func _update_all_labels_rotation():
 		if atom_labels.has(atom_id):
 			var label = atom_labels[atom_id]
 			if is_instance_valid(label):
-				# Используем billboard режим для автоматического поворота к камере
-				# Если billboard не работает, используем ручной поворот
 				if label.billboard != BaseMaterial3D.BILLBOARD_ENABLED:
-					# Вычисляем направление от метки к камере
 					var direction_to_camera = (camera_position - label.global_position).normalized()
-					
-					# Поворачиваем метку так, чтобы она смотрела на камеру
 					var target_rotation = Quaternion(Vector3.BACK, direction_to_camera)
 					label.quaternion = target_rotation
-					
-					# Ограничиваем поворот вокруг оси X
 					var euler = label.rotation
 					euler.x = clamp(euler.x, -1.57, 1.57)
 					label.rotation = euler
