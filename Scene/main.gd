@@ -15,6 +15,7 @@ extends Node3D
 @export var flag_scene: PackedScene = load("res://Scene/FLAG.tscn")
 
 @export var link_length: float = 0.5  # Длина связи
+@export var attach_distance: float = 0.3  # Дистанция для прикрепления флага к молекуле
 
 var atoms: Array = []  # Список всех атомов
 var links: Dictionary = {}  # Словарь существующих связей (ключ: "id1_id2")
@@ -37,6 +38,12 @@ var is_flag_moved: bool = false  # флаг, был ли перемещен те
 
 # Словарь для хранения Label3D каждого атома
 var atom_labels: Dictionary = {}  # instance_id -> Label3D
+
+# Переменные для отслеживания прикрепления флага к молекуле
+var is_flag_attached: bool = false  # прикреплен ли флаг к молекуле
+var attached_molecule_nodes: Array = []  # список узлов, входящих в молекулу
+var original_molecule_parents: Dictionary = {}  # оригинаальный родитель для каждого узла молекулы
+var active_held_flag: Node3D = null  # Флаг, который сейчас в руке у игрока
 
 func _ready():
 	# Загружаем данные об атомах
@@ -74,8 +81,35 @@ func _ready():
 		if pointer.has_signal("action_pressed"):
 			pointer.action_pressed.connect(_on_pointer_action_pressed)
 	
-	print("Система готова")
+	# Подключаем сигналы для текущего флага
+	_connect_flag_signals(flag)
 	
+	print("Система готова")
+
+func _connect_flag_signals(flag_instance: Node3D):
+	# Сигнал для отслеживания момента отпускания флага
+	if flag_instance.has_signal("dropped"):
+		if not flag_instance.dropped.is_connected(_on_flag_dropped):
+			flag_instance.dropped.connect(_on_flag_dropped)
+	
+	# Сигнал для отслеживания момента взятия флага
+	if flag_instance.has_signal("picked_up"):
+		if not flag_instance.picked_up.is_connected(_on_flag_picked_up):
+			flag_instance.picked_up.connect(_on_flag_picked_up)
+
+func _on_flag_picked_up(_pickable):
+	# Запоминаем, какой флаг взят в руку
+	active_held_flag = _pickable
+	print("[FLAG] Флаг взят в руку: ", _pickable.name)
+
+func _on_flag_dropped(_pickable):
+	# Флаг отпущен - проверяем, нужно ли прикрепить молекулу
+	# Используем тот флаг, который отпустили
+	if not is_flag_attached:
+		_check_and_attach_molecule_for_flag(_pickable)
+	
+	active_held_flag = null
+
 func _load_atoms_data():
 	# Открываем JSON файл
 	var file = FileAccess.open("res://data/atoms.json", FileAccess.READ)
@@ -104,8 +138,9 @@ func _process(delta):
 	_update_all_links()
 	# Обновляем транформ всех связей
 	_update_existing_links_transforms()
-	# Проверяем, не был ли перемещен флаг
-	_check_flag_movement()
+	# Проверяем, не был ли перемещен флаг (только если не прикреплен)
+	if not is_flag_attached:
+		_check_flag_movement()
 	# Обновляем повороты всех Label3D, чтобы они смотрели на игрока
 	_update_all_labels_rotation()
 	
@@ -147,7 +182,7 @@ func _check_flag_movement():
 func _create_new_flag_at_original_position():
 	# Создаем новый экземпляр флага
 	if not flag_scene:
-		print("Сцена флага не загружена!")
+		print("Сцена флага не загружена")
 		return
 	
 	var new_flag = flag_scene.instantiate()
@@ -161,15 +196,149 @@ func _create_new_flag_at_original_position():
 	# Добавляем в сцену
 	add_child(new_flag)
 	
-	# Обновляем ссылку на текущий флаг
-	current_flag_instance = new_flag
+	# Подключаем сигналы к новому флагу
+	_connect_flag_signals(new_flag)
 	
-	# Сбрасываем флаг перемещения, чтобы отслеживать перемещение нового флага
-	is_flag_moved = false
-	
+	# Оставляем старый флаг, который в руке у игрока
 	print("Создан новый флаг на позиции: ", original_flag_position)
 	print("С ротацией: ", original_flag_rotation)
+
+func _check_and_attach_molecule_for_flag(flag_instance: Node3D):
+	# Проверяем, есть ли атомы в сцене
+	if atoms.size() == 0:
+		print("Нет атомов для прикрепления")
+		return
 	
+	if not flag_instance or not is_instance_valid(flag_instance):
+		print("Флаг не существует")
+		return
+	
+	# Находим ближайший атом к флагу
+	var closest_atom: Node3D = null
+	var min_distance = attach_distance
+	
+	for atom in atoms:
+		if not is_instance_valid(atom):
+			continue
+		var distance = flag_instance.global_position.distance_to(atom.global_position)
+		print("Расстояние до атома ", atom.name, ": ", distance)
+		if distance < min_distance:
+			min_distance = distance
+			closest_atom = atom
+	
+	# Если атом найден на достаточном расстоянии
+	if closest_atom:
+		print("Найден ближайший атом на расстоянии: ", min_distance)
+		# Собираем все узлы, входящие в молекулу (атомы и связи)
+		var molecule_nodes = _get_molecule_nodes(closest_atom)
+		
+		if molecule_nodes.size() > 0:
+			_attach_molecule_to_flag(flag_instance, molecule_nodes)
+		else:
+			print("Не найдено узлов молекулы")
+	else:
+		print("Флаг слишком далеко от молекулы. Ближайшее расстояние: ", min_distance)
+
+func _get_molecule_nodes(start_atom: Node3D) -> Array:
+	var molecule_nodes = []
+	var visited = {}
+	var stack = [start_atom]
+	
+	while stack.size() > 0:
+		var atom = stack.pop_back()
+		var atom_id = atom.get_instance_id()
+		
+		if visited.has(atom_id):
+			continue
+		visited[atom_id] = true
+		
+		# Добавляем атом в список
+		if atom not in molecule_nodes:
+			molecule_nodes.append(atom)
+		
+		# Находим все связи с текущим атомом
+		for link_key in links.keys():
+			var link_data = links[link_key]
+			if not is_instance_valid(link_data["atom1"]) or not is_instance_valid(link_data["atom2"]):
+				continue
+				
+			var other_atom = null
+			if link_data["atom1"] == atom:
+				other_atom = link_data["atom2"]
+			elif link_data["atom2"] == atom:
+				other_atom = link_data["atom1"]
+			
+			if other_atom:
+				# Добавляем связь в список
+				if link_data["instance"] not in molecule_nodes:
+					molecule_nodes.append(link_data["instance"])
+				# Добавляем связанный атом в стек для обработки
+				if not visited.has(other_atom.get_instance_id()):
+					stack.append(other_atom)
+	
+	print("Найдено узлов в молекуле: ", molecule_nodes.size())
+	print("Из них атомов: ", visited.size())
+	print("Из них связей: ", molecule_nodes.size() - visited.size())
+	
+	return molecule_nodes
+
+func _attach_molecule_to_flag(flag_instance: Node3D, molecule_nodes: Array):
+	if is_flag_attached:
+		print("Молекула уже прикреплена")
+		return
+	
+	print("Прикрепление молекулы к флагу...")
+	print("Всего узлов для переподчинения: ", molecule_nodes.size())
+	
+	# Сохраняем оригинальных родителей и переподчиняем узлы
+	var success_count = 0
+	for node in molecule_nodes:
+		if not is_instance_valid(node):
+			print("Невалидный узел")
+			continue
+		
+		# Сохраняем оригинального родителя
+		var old_parent = node.get_parent()
+		original_molecule_parents[node] = old_parent
+		
+		# Сохраняем глобальную позицию перед переподчинением
+		var old_global_transform = node.global_transform
+		
+		# Переподчиняем флагу
+		old_parent.remove_child(node)
+		flag_instance.add_child(node)
+		
+		# Восстанавливаем глобальную трансформацию
+		node.global_transform = old_global_transform
+		
+		success_count += 1
+		print("Узел ", node.name, " переподчинён. Родитель был: ", old_parent.name, ", стал: ", flag_instance.name)
+	
+	attached_molecule_nodes = molecule_nodes.duplicate()
+	is_flag_attached = true
+	current_flag_instance = flag_instance  # Запоминаем флаг, к которому прикрепили молекулу
+	
+	print("Молекула успешно прикреплена к флагу")
+	print("Переподчинено узлов: ", success_count, " из ", molecule_nodes.size())
+	print("Флаг: ", flag_instance.name)
+	print("Дочерние элементы флага после прикрепления:")
+	_debug_print_children_recursive(flag_instance, 0)
+
+func _debug_print_children_recursive(node: Node, indent_level: int):
+	var indent = ""
+	for i in range(indent_level):
+		indent += "  "
+	for child in node.get_children():
+		if child is Node3D:
+			print(indent + "- ", child.name, " (тип: ", child.get_class(), ", позиция: ", child.position, ")")
+		else:
+			print(indent + "- ", child.name, " (тип: ", child.get_class(), ")")
+		_debug_print_children_recursive(child, indent_level + 1)
+
+# Функция для проверки, прикреплена ли молекула
+func is_molecule_attached() -> bool:
+	return is_flag_attached
+
 func _on_pointer_picked_up(_pickable):
 	print("Указка взята в руку")
 	# Включаем луч, если он был выключен
@@ -185,7 +354,7 @@ func _on_pointer_dropped(_pickable):
 		raycast.enabled = false
 
 func _on_pointer_action_pressed(_pickable):
-	# Вызывается, когда игрок нажимает action кнопку (trigger) пока указка в руке
+	# Вызывается, когда игрок нажимает триггер пока указка в руке
 	print("Нажат триггер")
 	if is_aiming_at_table_cell and current_hit_cell:
 		_spawn_atom_from_cell(current_hit_cell)	
@@ -243,9 +412,6 @@ func _spawn_atom_from_cell(cell_area: Area3D) -> void:
 	if label != null:
 		atom_labels[instance_id] = label
 	
-	if atom_instance.has_method("set_atom_data"):
-		atom_instance.set_atom_data(atom_data)
-	
 	add_child(atom_instance)
 	atoms.append(atom_instance)
 	
@@ -293,7 +459,7 @@ func _set_atom_label(atom_instance: Node3D, symbol: String) -> Label3D:
 		print("Установлен символ на Label3D: ", symbol)
 		return label_3d
 	else:
-		print("Предупреждение: Label3D не найден в сцене атома")
+		print("Label3D не найден в сцене атома")
 		return null
 		
 func _find_label_3d(node: Node) -> Label3D:
@@ -403,7 +569,7 @@ func _update_existing_links_transforms():
 
 func _create_link(atom1: Node3D, atom2: Node3D, link_key: String):
 	if not link:
-		print("Сцена связи не найдена!")
+		print("Сцена связи не найдена")
 		return
 	
 	var link_instance = link.instantiate()

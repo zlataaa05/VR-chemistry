@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d28tl31kdsx1t"
-path.s3tc="res://.godot/imported/mendeleev.jpg-802bf9cd01ca94b38d011ba36fb690a6.s3tc.ctex"
+uid="uid://wd8b18wa5r4c"
+path.s3tc="res://.godot/imported/floor_texture.jpg-b06e6e54375cfbd1126326b8a1be8e4d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://mendeleev.jpg"
-dest_files=["res://.godot/imported/mendeleev.jpg-802bf9cd01ca94b38d011ba36fb690a6.s3tc.ctex"]
+source_file="res://Texture/floor_texture.jpg"
+dest_files=["res://.godot/imported/floor_texture.jpg-b06e6e54375cfbd1126326b8a1be8e4d.s3tc.ctex"]
 
 [params]
 

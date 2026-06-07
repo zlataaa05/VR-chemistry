@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfv40r64xnd05"
-path.s3tc="res://.godot/imported/walls_texture_2.jpg-10ab98b1dd2c0c9d5d9cd4c61edef156.s3tc.ctex"
+uid="uid://bdf3vyus7oqxj"
+path.s3tc="res://.godot/imported/butlerov.jpg-b544837772b010c61b3cbb1b15c16189.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://walls_texture_2.jpg"
-dest_files=["res://.godot/imported/walls_texture_2.jpg-10ab98b1dd2c0c9d5d9cd4c61edef156.s3tc.ctex"]
+source_file="res://Texture/butlerov.jpg"
+dest_files=["res://.godot/imported/butlerov.jpg-b544837772b010c61b3cbb1b15c16189.s3tc.ctex"]
 
 [params]
 

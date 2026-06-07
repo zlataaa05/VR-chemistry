@@ -212,8 +212,8 @@ func _on_lern_area_exited(area: Area3D):
 		_reset_button_glow(button_lern, original_lern_material)
 
 func _on_lern_button_activated():
-	print("Кнопка Lern активирована. Переход на MAIN.tscn...")
-	_change_scene("MAIN")
+	print("Кнопка Lern активирована. Переход на MAIN_LEARN.tscn...")
+	_change_scene("MAIN_LEARN")
 
 func _on_exit_body_entered(body: Node):
 	if _is_hand(body):

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdf3vyus7oqxj"
-path.s3tc="res://.godot/imported/butlerov.jpg-b11fa8b4ff1a59ee440c03c50075286a.s3tc.ctex"
+uid="uid://d28tl31kdsx1t"
+path.s3tc="res://.godot/imported/mendeleev.jpg-6de9fda7daa5410528caecb1aa86c508.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://butlerov.jpg"
-dest_files=["res://.godot/imported/butlerov.jpg-b11fa8b4ff1a59ee440c03c50075286a.s3tc.ctex"]
+source_file="res://Texture/mendeleev.jpg"
+dest_files=["res://.godot/imported/mendeleev.jpg-6de9fda7daa5410528caecb1aa86c508.s3tc.ctex"]
 
 [params]
 
