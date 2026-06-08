@@ -151,6 +151,7 @@ func _load_atoms_data():
 	else:
 		print("Не удалось открыть файл atoms.json")
 	
+@warning_ignore("unused_parameter")
 func _process(delta):
 	# Вызываем проверку луча каждый кадр
 	_handle_raycast()

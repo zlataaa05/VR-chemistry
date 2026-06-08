@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://ck8aiw3xkhc4h" path="res://Scene/AVOGADRO.tscn" id="28_kyhav"]
 [ext_resource type="PackedScene" uid="uid://cs4xn12f56dwg" path="res://Scene/BUTLEROV.tscn" id="29_qdyrv"]
 [ext_resource type="PackedScene" uid="uid://cub5qkuih5tgf" path="res://plant_2/scene.gltf" id="31_0uo4t"]
+[ext_resource type="PackedScene" uid="uid://jrge7b1liu41" path="res://Scene/SCREEN_INFO.tscn" id="32_ycr82"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4c5ek"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -449,10 +450,10 @@ script = ExtResource("22_n61mx")
 metadata/_custom_type_script = "uid://cg33chvprvyfv"
 
 [node name="Tabl_Mendeleeva2" parent="." unique_id=2023467921 instance=ExtResource("23_kc57o")]
-transform = Transform3D(-2.6226832e-09, 0, -0.06, 0, 0.06, 0, 0.06, 0, -2.6226832e-09, 0, 2.6249676, -7.8347235)
+transform = Transform3D(-3.059797e-09, 0, -0.07, 0, 0.07, 0, 0.07, 0, -3.059797e-09, 0, 2.8173347, -7.8347235)
 
 [node name="Light_2" parent="." unique_id=1757224771 instance=ExtResource("13_goeh3")]
-transform = Transform3D(-9.791351e-08, 0, 2.24, 0, 2.24, 0, -2.24, 0, -9.791351e-08, 0, 4.2512875, -7.805571)
+transform = Transform3D(-9.791351e-08, 0, 2.24, 0, 2.24, 0, -2.24, 0, -9.791351e-08, 0, 4.635569, -7.805571)
 
 [node name="Work_desk" parent="." unique_id=449598841 instance=ExtResource("14_yvlmg")]
 transform = Transform3D(-4.371139e-08, 0, -1.39, 0, 0.64, 0, 1, 0, -6.075883e-08, 8.740969, 1.2754304, -6.8816986)
@@ -640,3 +641,6 @@ material = SubResource("StandardMaterial3D_0uo4t")
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 0, 0.06, -7.8195887)
 size = Vector3(0.025, 0.125, 16)
 material = SubResource("StandardMaterial3D_0uo4t")
+
+[node name="Screen_info" parent="." unique_id=2007059877 instance=ExtResource("32_ycr82")]
+transform = Transform3D(1.7742922, 0, -0.8787986, 0, 1.98, 0, 0.8787986, 0, 1.7742922, -3.338152, 2.7946024, -6.7802978)

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bmdwraqhb6us0" path="res://Scene/FLOOR_MENU.tscn" id="2_0uosn"]
 [ext_resource type="PackedScene" uid="uid://dpgvo5fqbxl2b" path="res://Scene/PLAYER_MENU.tscn" id="3_7dj3q"]
 [ext_resource type="PackedScene" uid="uid://j20v4cg7v8m1" path="res://addons/scene_manager/SceneManager.tscn" id="4_7dj3q"]
+[ext_resource type="Script" uid="uid://cg33chvprvyfv" path="res://addons/godot-xr-tools/xr/start_xr.gd" id="5_73v4x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_iwv4e"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -116,3 +117,7 @@ transform = Transform3D(1, 0, 0, 0, 0.99998754, 0, 0, 0, 0.99997735, 0, 0.015867
 shape = SubResource("BoxShape3D_0uosn")
 
 [node name="SceneManager" parent="." unique_id=2115961095 instance=ExtResource("4_7dj3q")]
+
+[node name="XRToolsStartXR" type="Node" parent="." unique_id=2058337172]
+script = ExtResource("5_73v4x")
+metadata/_custom_type_script = "uid://cg33chvprvyfv"
