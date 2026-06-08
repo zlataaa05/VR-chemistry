@@ -28,7 +28,12 @@
 [ext_resource type="PackedScene" uid="uid://ck8aiw3xkhc4h" path="res://Scene/AVOGADRO.tscn" id="28_mqyqu"]
 [ext_resource type="PackedScene" uid="uid://cs4xn12f56dwg" path="res://Scene/BUTLEROV.tscn" id="29_1bw6q"]
 [ext_resource type="PackedScene" uid="uid://vp8025n3t1ko" path="res://plant_1/source/rhyzome plant.fbx" id="30_a00ms"]
+[ext_resource type="PackedScene" uid="uid://jrge7b1liu41" path="res://Scene/SCREEN_INFO.tscn" id="30_fxgx2"]
+[ext_resource type="PackedScene" uid="uid://hgyxses1bqt7" path="res://Scene/SCREEN_LEARN.tscn" id="31_ainnj"]
 [ext_resource type="PackedScene" uid="uid://cub5qkuih5tgf" path="res://plant_2/scene.gltf" id="31_d6jbf"]
+[ext_resource type="PackedScene" uid="uid://c4eon4blx4bui" path="res://Scene/ZONE.tscn" id="32_70l2u"]
+[ext_resource type="Script" uid="uid://caq65e2xdyjam" path="res://Scene/zone.gd" id="33_v7nu0"]
+[ext_resource type="PackedScene" uid="uid://btyubsaugq301" path="res://Scene/BUTTON.tscn" id="34_wmml6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4c5ek"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -87,6 +92,12 @@ albedo_color = Color(0.8047423, 0.80474275, 0.8047425, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yvlmg"]
 albedo_color = Color(0.8039216, 0.8039216, 0.8039216, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ainnj"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_70l2u"]
+albedo_color = Color(0, 0, 0, 1)
 
 [node name="Main_learn" type="Node3D" unique_id=998266863]
 script = ExtResource("1_ainnj")
@@ -416,10 +427,10 @@ script = ExtResource("11_3v0jg")
 metadata/_custom_type_script = "uid://cg33chvprvyfv"
 
 [node name="Tabl_Mendeleeva2" parent="." unique_id=2023467921 instance=ExtResource("12_qlfcb")]
-transform = Transform3D(-2.6226832e-09, 0, -0.06, 0, 0.06, 0, 0.06, 0, -2.6226832e-09, 0, 2.6249676, -7.8347235)
+transform = Transform3D(-3.059797e-09, 0, -0.07, 0, 0.07, 0, 0.07, 0, -3.059797e-09, 0, 2.817, -7.835)
 
 [node name="Light_2" parent="." unique_id=1757224771 instance=ExtResource("13_m7ds8")]
-transform = Transform3D(-9.791351e-08, 0, 2.24, 0, 2.24, 0, -2.24, 0, -9.791351e-08, 0, 4.2512875, -7.805571)
+transform = Transform3D(-9.791351e-08, 0, 2.24, 0, 2.24, 0, -2.24, 0, -9.791351e-08, 0, 4.636, -7.806)
 
 [node name="Work_desk" parent="." unique_id=449598841 instance=ExtResource("14_t4shw")]
 transform = Transform3D(-4.371139e-08, 0, -1.39, 0, 0.64, 0, 1, 0, -6.075883e-08, 8.740969, 1.2754304, -6.8816986)
@@ -587,3 +598,46 @@ transform = Transform3D(0.7680015, 0, -9.4182475e-09, 0, 0.76902205, 0, -7.35674
 
 [node name="Plant_2" parent="." unique_id=595326433 instance=ExtResource("31_d6jbf")]
 transform = Transform3D(2.735, 0, 0, 0, 2.735, 0, 0, 0, 2.735, -7.6823454, 1.5039272, -2.4015276)
+
+[node name="Screen_info" parent="." unique_id=2007059877 instance=ExtResource("30_fxgx2")]
+transform = Transform3D(1.7750431, 0, -0.87728095, 0, 1.98, 0, 0.87728095, 0, 1.7750431, -3.338, 2.795, -6.78)
+
+[node name="Screen_learn" parent="." unique_id=1131325353 instance=ExtResource("31_ainnj")]
+transform = Transform3D(-1.775043, 0, -0.87728065, 0, 1.9799999, 0, 0.87728065, 0, -1.775043, 3.338, 2.795, -6.78)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1794491271]
+transform = Transform3D(0.0015709691, 0.0010916733, 0.99999815, -0.004134968, 0.9999909, -0.0010851722, -0.9999902, -0.004133256, 0.001575467, -3.9905758, 2.8235111, -7.382702)
+size = Vector3(1.105, 0.18, 0.165)
+material = SubResource("StandardMaterial3D_ainnj")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=422760478]
+transform = Transform3D(-0.88686633, -0.003165828, 0.46201575, -0.004134969, 0.9999909, -0.0010851731, -0.46200395, -0.0028728587, -0.88687116, -3.7466319, 2.8233714, -6.7537565)
+size = Vector3(0.6482593, 0.18, 0.165)
+material = SubResource("StandardMaterial3D_70l2u")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=2135615462]
+transform = Transform3D(0.0015709691, 0.0010916733, 0.99999815, -0.004134968, 0.9999909, -0.0010851722, -0.9999902, -0.004133256, 0.001575467, -3.989827, 2.82154, -7.8593864)
+size = Vector3(0.152, 0.445, 0.445)
+material = SubResource("StandardMaterial3D_ainnj")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="." unique_id=219212992]
+transform = Transform3D(0.0015709691, 0.0010916733, 0.99999815, -0.004134968, 0.9999909, -0.0010851722, -0.9999902, -0.004133256, 0.001575467, 3.991, 2.8235111, -7.382702)
+size = Vector3(1.105, 0.18, 0.165)
+material = SubResource("StandardMaterial3D_ainnj")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="." unique_id=812538292]
+transform = Transform3D(0.8868456, 0.006813556, -0.46201676, 0.0073700487, -0.9999729, -0.0006000518, -0.46200404, -0.0028728796, -0.8868714, 3.74672, 2.8233712, -6.7481966)
+size = Vector3(0.6483484, 0.18, 0.165)
+material = SubResource("StandardMaterial3D_70l2u")
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="." unique_id=669852251]
+transform = Transform3D(0.0015709691, 0.0010916733, 0.99999815, -0.004134968, 0.9999909, -0.0010851722, -0.9999902, -0.004133256, 0.001575467, 3.991, 2.82154, -7.8593864)
+size = Vector3(0.152, 0.445, 0.445)
+material = SubResource("StandardMaterial3D_ainnj")
+
+[node name="Zone" parent="." unique_id=772297992 instance=ExtResource("32_70l2u")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 1.7901477, 1.4876027, -6.907992)
+script = ExtResource("33_v7nu0")
+
+[node name="Button" parent="." unique_id=2041904121 instance=ExtResource("34_wmml6")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.8165686, 1.407464, -6.096767)

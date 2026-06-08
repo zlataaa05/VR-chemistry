@@ -16,6 +16,9 @@ albedo_color = Color(0, 0, 0, 1)
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="FontFile" id="FontFile_0bepo"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/variation_coordinates = {}
 cache/0/face_index = 0
 cache/0/embolden = 0.0
@@ -113,9 +116,9 @@ metadata/entity_name = "Label"
 [node name="Label4" type="Label" parent="SubViewport/UI" unique_id=611460166]
 layout_mode = 0
 offset_left = 33.0
-offset_top = 96.0
+offset_top = 83.0
 offset_right = 769.0
-offset_bottom = 119.0
+offset_bottom = 129.0
 theme_override_colors/font_color = Color(0.12941177, 0.5137255, 0.52156866, 1)
 theme_override_colors/font_outline_color = Color(0.12941177, 0.5137255, 0.52156866, 1)
 theme_override_constants/outline_size = 4
@@ -126,23 +129,23 @@ horizontal_alignment = 1
 [node name="Label2" type="Label" parent="SubViewport/UI" unique_id=210691881]
 layout_mode = 0
 offset_left = 33.0
-offset_top = 96.0
+offset_top = 83.0
 offset_right = 769.0
-offset_bottom = 273.0
+offset_bottom = 325.0
 theme_override_colors/font_color = Color(0.12841329, 0.515557, 0.5227265, 1)
 theme_override_font_sizes/font_size = 33
 text = "
 1. Возьмите указку со стола
-2. Наведите синий луч на любую ячейку таблицы
+2. Наведите синий луч на любую подсвеченную ячейку таблицы
 3. Нажмите курок, чтобы «извлечь» атом"
 autowrap_mode = 3
 
 [node name="Label5" type="Label" parent="SubViewport/UI" unique_id=1927560717]
 layout_mode = 0
 offset_left = 33.0
-offset_top = 341.0
+offset_top = 328.0
 offset_right = 769.0
-offset_bottom = 387.0
+offset_bottom = 374.0
 theme_override_colors/font_color = Color(1, 0.25882354, 0.2, 1)
 theme_override_colors/font_outline_color = Color(1, 0.25882354, 0.2, 1)
 theme_override_constants/outline_size = 4
@@ -153,23 +156,23 @@ horizontal_alignment = 1
 [node name="Label3" type="Label" parent="SubViewport/UI" unique_id=725557377]
 layout_mode = 0
 offset_left = 35.0
-offset_top = 341.0
+offset_top = 328.0
 offset_right = 771.0
-offset_bottom = 632.0
+offset_bottom = 668.0
 theme_override_colors/font_color = Color(1, 0.26000598, 0.2008352, 1)
 theme_override_font_sizes/font_size = 33
 text = "
 1. Возьмите атом любой рукой
-2. Сближайте два атома
-3. Если атомы не соединяются, значит, один из них уже достиг своей максимальной валентности"
+2. Сближайте атомы до появления связи между ними
+3. Если атомы не соединяются, значит, один из них уже достиг  максимальной валентности"
 autowrap_mode = 3
 
 [node name="Label6" type="Label" parent="SubViewport/UI" unique_id=1771134251]
 layout_mode = 0
 offset_left = 35.0
-offset_top = 633.0
+offset_top = 653.0
 offset_right = 771.0
-offset_bottom = 679.0
+offset_bottom = 699.0
 theme_override_colors/font_color = Color(0, 0.24313726, 0.6627451, 1)
 theme_override_colors/font_outline_color = Color(0, 0.24313726, 0.6627451, 1)
 theme_override_constants/outline_size = 4
@@ -180,9 +183,9 @@ horizontal_alignment = 1
 [node name="Label7" type="Label" parent="SubViewport/UI" unique_id=569156875]
 layout_mode = 0
 offset_left = 37.0
-offset_top = 633.0
+offset_top = 653.0
 offset_right = 773.0
-offset_bottom = 973.0
+offset_bottom = 993.0
 theme_override_colors/font_color = Color(0, 0.24313726, 0.6627451, 1)
 theme_override_font_sizes/font_size = 33
 text = "

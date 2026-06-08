@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://btyubsaugq301"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvr7m"]
+albedo_color = Color(0.7919991, 0.79199916, 0.7919991, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nvr7m"]
+material = SubResource("StandardMaterial3D_nvr7m")
+size = Vector3(0.245, 0.055, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_20i8n"]
+albedo_color = Color(0.36674064, 0.84067345, 0.36126953, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nvr7m"]
+material = SubResource("StandardMaterial3D_20i8n")
+radius = 0.115
+height = 0.465
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nvr7m"]
+radius = 0.11767578
+height = 0.47
+
+[node name="Button" type="Node3D" unique_id=2041904121]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1186310155]
+transform = Transform3D(1.0850481, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.024633974, 0)
+mesh = SubResource("BoxMesh_nvr7m")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1965180385]
+transform = Transform3D(-4.3711385e-08, -0.99999994, -4.3711385e-08, 0, -4.3711385e-08, 0.99999994, -0.9999999, 4.3711385e-08, 1.9106853e-15, 0, 0.054961294, 0)
+modulate = Color(0, 0, 0, 1)
+text = "Далее"
+font_size = 13
+outline_size = 0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=815154915]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.45546234, 0, 1, -1.990889e-08, 0, 0.0013338178, 0)
+layers = 7
+mesh = SubResource("CapsuleMesh_nvr7m")
+
+[node name="Area_button" type="Area3D" parent="MeshInstance3D2" unique_id=188636583]
+collision_layer = 7
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/Area_button" unique_id=279312106]
+transform = Transform3D(1, 0, 0, 0, 1, -8.526513e-14, 0, 0, 1, 0, -8.0818914e-11, -0.0040594386)
+shape = SubResource("CapsuleShape3D_nvr7m")

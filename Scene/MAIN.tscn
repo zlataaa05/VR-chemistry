@@ -69,7 +69,6 @@ albedo_color = Color(0.9490196, 0.8784314, 0.78039217, 1)
 albedo_color = Color(0.9490196, 0.8784314, 0.78039217, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w64on"]
-albedo_color = Color(0.9478864, 0.8792478, 0.78231657, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goeh3"]
 
@@ -93,6 +92,12 @@ albedo_color = Color(0.8039216, 0.8039216, 0.8039216, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0uo4t"]
 albedo_color = Color(0.43586323, 0.21758318, 0.16676837, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ycr82"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p6i1p"]
+albedo_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node3D" unique_id=998266863]
 script = ExtResource("1_yvlmg")
@@ -644,3 +649,18 @@ material = SubResource("StandardMaterial3D_0uo4t")
 
 [node name="Screen_info" parent="." unique_id=2007059877 instance=ExtResource("32_ycr82")]
 transform = Transform3D(1.7742922, 0, -0.8787986, 0, 1.98, 0, 0.8787986, 0, 1.7742922, -3.338152, 2.7946024, -6.7802978)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=134470937]
+transform = Transform3D(0.0015709691, 0.0010916733, 0.99999815, -0.004134968, 0.9999909, -0.0010851722, -0.9999902, -0.004133256, 0.001575467, -3.9905758, 2.8235111, -7.382702)
+size = Vector3(1.105, 0.18, 0.165)
+material = SubResource("StandardMaterial3D_ycr82")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1423336851]
+transform = Transform3D(-0.88686633, -0.003165828, 0.46201575, -0.004134969, 0.9999909, -0.0010851731, -0.46200395, -0.0028728587, -0.88687116, -3.7466319, 2.8233714, -6.7537565)
+size = Vector3(0.6482593, 0.18, 0.165)
+material = SubResource("StandardMaterial3D_p6i1p")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=269118056]
+transform = Transform3D(0.0015709691, 0.0010916733, 0.99999815, -0.004134968, 0.9999909, -0.0010851722, -0.9999902, -0.004133256, 0.001575467, -3.989827, 2.82154, -7.8593864)
+size = Vector3(0.152, 0.445, 0.445)
+material = SubResource("StandardMaterial3D_ycr82")

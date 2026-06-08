@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://hgyxses1bqt7"]
+
+[ext_resource type="Texture2D" uid="uid://kbwomntuvfqv" path="res://Texture/H2O.png" id="1_m88up"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rjky5"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m88up"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k85hv"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v8kal"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kr7g3"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rjky5"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Screen_learn" type="Node3D" unique_id=1131325353]
+
+[node name="Screen" type="CSGBox3D" parent="." unique_id=1005444502]
+size = Vector3(0.025, 1.32, 1.03)
+material = SubResource("StandardMaterial3D_rjky5")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=654622052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5239725)
+size = Vector3(0.04, 1.32, 0.03)
+material = SubResource("StandardMaterial3D_m88up")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=243981253]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.524)
+size = Vector3(0.04, 1.32, 0.03)
+material = SubResource("StandardMaterial3D_k85hv")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=464443633]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.66578805, 0)
+size = Vector3(0.04, 1.078, 0.03)
+material = SubResource("StandardMaterial3D_v8kal")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=1729896205]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.66804504, 0)
+size = Vector3(0.04, 1.078, 0.03)
+material = SubResource("StandardMaterial3D_kr7g3")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1378156505]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1698536928]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(800, 1024)
+render_target_update_mode = 4
+
+[node name="UI" type="Control" parent="SubViewport" unique_id=1556158556]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pars_tasks" type="Label" parent="SubViewport/UI" unique_id=338263965]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 51.0
+offset_right = 769.0
+offset_bottom = 570.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 30
+text = "ЗАДАНИЕ №1
+
+1) Создайте один атом кислорода и два атома водорода с помощью голубой указки
+
+2) Соедините атомы в последовательности:
+H - O - H
+
+3) Поместите собранную молекулу в подсвеченную зону проверки"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureButton" type="TextureButton" parent="SubViewport/UI" unique_id=2034748052]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 523.0
+offset_right = 585.0
+offset_bottom = 834.0
+texture_normal = ExtResource("1_m88up")
+
+[node name="Pars_result" type="Label" parent="SubViewport/UI" unique_id=292609468]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 880.0
+offset_right = 769.0
+offset_bottom = 935.00006
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Pars_info" type="Label" parent="SubViewport/UI" unique_id=758557946]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 49.0
+offset_right = 769.0
+offset_bottom = 983.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1289490678]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.019, 0, 0)
+pixel_size = 0.0013
+texture = SubResource("ViewportTexture_rjky5")
