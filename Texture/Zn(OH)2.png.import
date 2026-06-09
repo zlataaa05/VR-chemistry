@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bt077efqvtl0b"
-path="res://.godot/imported/NaOH.png-44e80022691c61e5483bb016ca7e0737.ctex"
+uid="uid://bm5q2yd8ni62d"
+path="res://.godot/imported/Zn(OH)2.png-8aea3693959c653db141cbb7f134a9ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Texture/NaOH.png"
-dest_files=["res://.godot/imported/NaOH.png-44e80022691c61e5483bb016ca7e0737.ctex"]
+source_file="res://Texture/Zn(OH)2.png"
+dest_files=["res://.godot/imported/Zn(OH)2.png-8aea3693959c653db141cbb7f134a9ab.ctex"]
 
 [params]
 

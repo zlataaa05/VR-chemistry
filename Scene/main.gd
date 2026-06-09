@@ -1,5 +1,6 @@
 extends Node3D
 
+signal molecule_structure_checked(is_correct: bool, structure: Dictionary)
 # Ссылки
 @onready var table = $Tabl_Mendeleeva2
 @export var atom_scene: PackedScene = load("res://Scene/ATOM.tscn")
@@ -82,6 +83,18 @@ func _ready():
 			pointer.action_pressed.connect(_on_pointer_action_pressed)
 	
 	print("Система готова")
+
+
+# Функция для проверки молекулы
+func check_current_molecule_structure(flag_root: Node3D, expected_structure: Dictionary) -> bool:
+	var structure = analyze_molecule_structure(flag_root)
+	return check_molecule_structure(flag_root, expected_structure)
+
+# Отправка результата в zone.gd
+func send_molecule_data_to_zone(flag_root: Node3D, expected_structure: Dictionary):
+	var is_correct = check_molecule_structure(flag_root, expected_structure)
+	emit_signal("molecule_structure_checked", is_correct, analyze_molecule_structure(flag_root))
+
 
 func _initialize_flag(flag_instance: Node3D):
 	"""Инициализирует новый флаг, подключает сигналы и добавляет в список"""
@@ -769,3 +782,75 @@ func _update_all_labels_rotation():
 					var euler = label.rotation
 					euler.x = clamp(euler.x, -1.57, 1.57)
 					label.rotation = euler
+
+
+func analyze_molecule_structure(flag_root: Node3D) -> Dictionary:
+	# Собираем все атомы, которые являются дочерними узлами флага
+	var molecule_atoms = []
+	for child in flag_root.get_children():
+		if child.name == "Atom" or child.name == "ATOM" or child.get_instance_id() in atom_valence:
+			molecule_atoms.append(child)
+	
+	# Собираем структуру связей между этими атомами
+	var structure = {
+		"atoms": [],  # список символов атомов
+		"bonds": [],  # список связей [atom1_symbol, atom2_symbol]
+		"adjacency": {}  # словарь смежности: atom_id -> [соседние_atom_id]
+	}
+	
+	for atom in molecule_atoms:
+		var atom_symbol = _get_atom_symbol(atom)
+		structure["atoms"].append(atom_symbol)
+		structure["adjacency"][atom.get_instance_id()] = []
+	
+	# Анализируем связи
+	for link_key in links.keys():
+		var link_data = links[link_key]
+		var atom1 = link_data["atom1"]
+		var atom2 = link_data["atom2"]
+		
+		# Проверяем, принадлежат ли оба атома этой молекуле
+		if atom1 in molecule_atoms and atom2 in molecule_atoms:
+			var atom1_symbol = _get_atom_symbol(atom1)
+			var atom2_symbol = _get_atom_symbol(atom2)
+			structure["bonds"].append([atom1_symbol, atom2_symbol])
+			structure["adjacency"][atom1.get_instance_id()].append(atom2.get_instance_id())
+			structure["adjacency"][atom2.get_instance_id()].append(atom1.get_instance_id())
+	
+	return structure
+
+func _get_atom_symbol(atom: Node3D) -> String:
+	# Получаем символ атома из Label3D
+	var label = _find_label_3d(atom)
+	if label:
+		return label.text
+	return "Unknown"
+
+func check_molecule_structure(flag_root: Node3D, expected_structure: Dictionary) -> bool:
+	var structure = analyze_molecule_structure(flag_root)
+	
+	# Проверяем количество атомов
+	if structure["atoms"].size() != expected_structure["atoms"].size():
+		print("Неверное количество атомов")
+		return false
+	
+	# Проверяем наличие всех нужных атомов
+	for expected_atom in expected_structure["atoms"]:
+		if expected_atom not in structure["atoms"]:
+			print("Отсутствует атом: ", expected_atom)
+			return false
+	
+	# Проверяем все связи
+	for expected_bond in expected_structure["bonds"]:
+		var bond_found = false
+		for bond in structure["bonds"]:
+			if (bond[0] == expected_bond[0] and bond[1] == expected_bond[1]) or \
+			   (bond[0] == expected_bond[1] and bond[1] == expected_bond[0]):
+				bond_found = true
+				break
+		if not bond_found:
+			print("Отсутствует связь: ", expected_bond[0], "-", expected_bond[1])
+			return false
+	
+	print("Структура молекулы верна")
+	return true

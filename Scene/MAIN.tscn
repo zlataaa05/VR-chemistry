@@ -69,6 +69,7 @@ albedo_color = Color(0.9490196, 0.8784314, 0.78039217, 1)
 albedo_color = Color(0.9490196, 0.8784314, 0.78039217, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w64on"]
+albedo_color = Color(0.9490196, 0.8784314, 0.78039217, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goeh3"]
 
