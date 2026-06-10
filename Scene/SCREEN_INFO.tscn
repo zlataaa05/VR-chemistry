@@ -196,6 +196,7 @@ text = "
 autowrap_mode = 3
 
 [node name="Label_info1" type="Label" parent="SubViewport/UI" unique_id=572557263]
+visible = false
 layout_mode = 0
 offset_left = 34.0
 offset_top = 29.0
@@ -217,6 +218,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="Label_info2" type="Label" parent="SubViewport/UI" unique_id=767279727]
+visible = false
 layout_mode = 0
 offset_left = 25.0
 offset_top = 26.0
@@ -239,6 +241,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="Label_info3" type="Label" parent="SubViewport/UI" unique_id=580480265]
+visible = false
 layout_mode = 0
 offset_left = 31.0
 offset_top = 33.0
