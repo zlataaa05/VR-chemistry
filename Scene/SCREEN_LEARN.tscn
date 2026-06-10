@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://hgyxses1bqt7"]
 
 [ext_resource type="Texture2D" uid="uid://kbwomntuvfqv" path="res://Texture/H2O.png" id="1_m88up"]
+[ext_resource type="Texture2D" uid="uid://bm5q2yd8ni62d" path="res://Texture/Zn(OH)2.png" id="2_k85hv"]
+[ext_resource type="Texture2D" uid="uid://ck3044mjdgyg7" path="res://Texture/H3BO3.png" id="3_v8kal"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rjky5"]
 resource_local_to_scene = true
@@ -64,7 +66,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Pars_tasks" type="Label" parent="SubViewport/UI" unique_id=338263965]
+[node name="Pars_result" type="Label" parent="SubViewport/UI" unique_id=292609468]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 915.0
+offset_right = 769.0
+offset_bottom = 970.00006
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Pars_task1" type="Label" parent="SubViewport/UI" unique_id=338263965]
 layout_mode = 0
 offset_left = 33.0
 offset_top = 51.0
@@ -81,43 +96,80 @@ text = "ЗАДАНИЕ №1
 2) Соедините атомы в последовательности:
 H - O - H
 
-3) Поместите собранную молекулу в подсвеченную зону проверки"
+3) Поместите собранную молекулу в подсвеченную зону проверки и нажмите кнопку на столе"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="TextureButton" type="TextureButton" parent="SubViewport/UI" unique_id=2034748052]
+[node name="TextureButton1" type="TextureButton" parent="SubViewport/UI" unique_id=2034748052]
 layout_mode = 0
 offset_left = 225.0
-offset_top = 523.0
+offset_top = 571.0
 offset_right = 585.0
-offset_bottom = 834.0
+offset_bottom = 882.0
 texture_normal = ExtResource("1_m88up")
 
-[node name="Pars_result" type="Label" parent="SubViewport/UI" unique_id=292609468]
+[node name="Pars_task2" type="Label" parent="SubViewport/UI" unique_id=643350411]
+visible = false
 layout_mode = 0
 offset_left = 33.0
-offset_top = 880.0
+offset_top = 51.0
 offset_right = 769.0
-offset_bottom = 935.00006
+offset_bottom = 570.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 30
+text = "ЗАДАНИЕ №2
+
+1) Создайте один атом цинка, два атома кислорода и два атома водорода
+
+2) Соедините атомы в последовательности:
+H – O – Zn – O – H
+
+3) Поместите собранную молекулу в подсвеченную зону проверки и нажмите кнопку на столе"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Pars_info" type="Label" parent="SubViewport/UI" unique_id=758557946]
+[node name="TextureButton2" type="TextureButton" parent="SubViewport/UI" unique_id=938537890]
+visible = false
+layout_mode = 0
+offset_left = 165.0
+offset_top = 580.0
+offset_right = 654.0
+offset_bottom = 891.0
+texture_normal = ExtResource("2_k85hv")
+
+[node name="Pars_task3" type="Label" parent="SubViewport/UI" unique_id=1016174164]
+visible = false
 layout_mode = 0
 offset_left = 33.0
-offset_top = 49.0
+offset_top = 51.0
 offset_right = 769.0
-offset_bottom = 983.0
+offset_bottom = 570.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 30
+text = "ЗАДАНИЕ №3
+
+1) Создайте один атом бора, три атома кислорода и три атома водорода
+2) Соедините атомы в последовательности:
+H – O – B – O – H
+			O
+			H
+3) Поместите собранную молекулу в подсвеченную зону проверки и нажмите кнопку на столе"
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="TextureButton3" type="TextureButton" parent="SubViewport/UI" unique_id=999646709]
+visible = false
+layout_mode = 0
+offset_left = 237.0
+offset_top = 575.0
+offset_right = 726.0
+offset_bottom = 974.0
+scale = Vector2(0.8400018, 0.8)
+texture_normal = ExtResource("3_v8kal")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1289490678]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.019, 0, 0)

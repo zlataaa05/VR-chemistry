@@ -56,7 +56,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="Floor" parent="." unique_id=1004367032 instance=ExtResource("2_0uosn")]
 
 [node name="Panel" type="CSGBox3D" parent="." unique_id=1862123456]
-transform = Transform3D(1.1795957, 0, 0, 0, 0.28433785, -0.69201595, 0, 1.2588378, 0.15630792, 0.00026595104, 2.1888375, -1.6064643)
+transform = Transform3D(1.1795957, 0, 0, 0, 0.28433785, -0.69201595, 0, 1.2588378, 0.15630792, 0.00026595104, 2.1888375, -1.4240242)
 use_collision = true
 size = Vector3(2.1, 0.13, 1)
 material = SubResource("StandardMaterial3D_0uosn")

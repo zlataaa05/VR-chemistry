@@ -636,8 +636,8 @@ size = Vector3(0.152, 0.445, 0.445)
 material = SubResource("StandardMaterial3D_ainnj")
 
 [node name="Zone" parent="." unique_id=772297992 instance=ExtResource("32_70l2u")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 1.7901477, 1.4876027, -6.907992)
+transform = Transform3D(2.2556608, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 1.5946606, 1.4876027, -6.907992)
 script = ExtResource("33_v7nu0")
 
 [node name="Button" parent="." unique_id=2041904121 instance=ExtResource("34_wmml6")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.8165686, 1.407464, -6.096767)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.6099949, 1.407464, -6.096767)

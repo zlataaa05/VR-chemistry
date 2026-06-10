@@ -195,6 +195,69 @@ text = "
 4. Перемещайте молекулу, взявшись рукой за ярлык"
 autowrap_mode = 3
 
+[node name="Label_info1" type="Label" parent="SubViewport/UI" unique_id=572557263]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 29.0
+offset_right = 770.0
+offset_bottom = 993.035
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 33
+text = "                       Молекула воды H₂O
+     Вода состоит из двух атомов водорода и одного атома кислорода, соединенных ковалентными связями (между двумя атомами-неметаллами).
+                              Водород (H)
+Порядковый номер 1, валентность I, бесцветный и самый лёгкий газ
+                             Кислород (O)
+Порядковый номер 8, валентность II, газ без цвета и запаха
+
+
+
+*Валентность — это способность атома химического элемента образовывать определённое количество химических связей с другими атомами."
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label_info2" type="Label" parent="SubViewport/UI" unique_id=767279727]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 26.0
+offset_right = 761.0
+offset_bottom = 1003.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 33
+text = "                     Молекула гидроксида
+                            цинка Zn(OH)₂
+     Вещество состоит из одного атома цинка и двух гидроксильных групп OH, соединенных ионными связями (между металлом и группой OH).
+                                Цинк (Zn)
+     Порядковый номер 30, максимальная валентность II , металл голубовато-белого цвета.
+                            Кислород (O)
+Порядковый номер 8, валентность II, газ без цвета и запаха.
+                             Водород (H)
+     Порядковый номер 1, валентность I, бесцветный и самый лёгкий газ.
+
+*Гидроксильная группа (OH) — это атом кислорода и атом водорода, соединенные ковалентной связью."
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label_info3" type="Label" parent="SubViewport/UI" unique_id=580480265]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 33.0
+offset_right = 767.0
+offset_bottom = 997.035
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 33
+text = "                     Борная кислота H₃BO₃
+     Молекула состоит из одного атома бора, трёх атомов водорода и трёх атомов кислорода, где атом бора соединён с каждой группой OH ковалентными связями (B – O).
+                                  Бор (B)
+Порядковый номер 5, валентность III, твёрдое тёмное или коричневое вещество.
+                             Кислород (O)
+Порядковый номер 8, валентность II, газ без цвета и запаха.
+                              Водород (H)
+Порядковый номер 1, валентность I, бесцветный и самый лёгкий газ.
+"
+vertical_alignment = 1
+autowrap_mode = 3
+
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=300963673]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.018609762, 0, 0)
 pixel_size = 0.0013
