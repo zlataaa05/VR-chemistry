@@ -182,7 +182,7 @@ use_collision = true
 size = Vector3(15.96, 1, 15.825)
 
 [node name="Player" parent="." unique_id=1355984825 instance=ExtResource("7_pk3n0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06762385, 1.5856651, -4.92319)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06762385, 1.4856651, -4.92319)
 
 [node name="Shelfs2" parent="." unique_id=567405109 instance=ExtResource("8_nav1f")]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -6.9772606, 2.229106, 7.705755)
@@ -420,7 +420,7 @@ spot_range = 9.858
 spot_attenuation = 1.4
 
 [node name="Pointer" parent="." unique_id=1524902413 instance=ExtResource("10_hp74t")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.5388677, 1.4403148, -6.243788)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.05286038, 1.4403148, -6.243788)
 
 [node name="XRToolsStartXR" type="Node" parent="." unique_id=1834913355]
 script = ExtResource("11_3v0jg")
@@ -636,8 +636,8 @@ size = Vector3(0.152, 0.445, 0.445)
 material = SubResource("StandardMaterial3D_ainnj")
 
 [node name="Zone" parent="." unique_id=772297992 instance=ExtResource("32_70l2u")]
-transform = Transform3D(2.2556608, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 1.5946606, 1.4876027, -6.907992)
+transform = Transform3D(2.2556608, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 1.2955757, 1.4876027, -6.907992)
 script = ExtResource("33_v7nu0")
 
 [node name="Button" parent="." unique_id=2041904121 instance=ExtResource("34_wmml6")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.6099949, 1.407464, -6.096767)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.31091, 1.407464, -6.096767)

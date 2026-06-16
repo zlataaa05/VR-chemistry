@@ -52,6 +52,21 @@ cache/0/35/0/scale = 1.0
 [sub_resource type="ViewportTexture" id="ViewportTexture_0bepo"]
 viewport_path = NodePath("SubViewport")
 
+[sub_resource type="BoxMesh" id="BoxMesh_0bepo"]
+size = Vector3(0.245, 0.055, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxk1f"]
+albedo_color = Color(1, 0.2372379, 0.24983045, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1wb02"]
+material = SubResource("StandardMaterial3D_dxk1f")
+radius = 0.115
+height = 0.465
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_niuj3"]
+radius = 0.118
+height = 0.47
+
 [node name="Screen_info" type="Node3D" unique_id=2007059877]
 
 [node name="Screen" type="CSGBox3D" parent="." unique_id=1988634903]
@@ -262,6 +277,41 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=300963673]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.018609762, 0, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.01906526, 0, 0)
 pixel_size = 0.0013
 texture = SubResource("ViewportTexture_0bepo")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=808332370]
+transform = Transform3D(0.9114392, 0.41143483, -1.7984387e-08, 0, -4.371139e-08, -1, -0.41143483, 0.9114392, -3.9840273e-08, 0.042804085, -0.21883097, 0.6238656)
+size = Vector3(0.04, 0.20640138, 0.03)
+material = SubResource("StandardMaterial3D_1wb02")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="." unique_id=1317321944]
+transform = Transform3D(0.9114392, 0, 0.41143483, 0, 1, 0, -0.41143483, 0, 0.9114392, 0.08574037, -0.26030034, 0.7184632)
+size = Vector3(0.04, 0.11189942, 0.03)
+material = SubResource("StandardMaterial3D_1wb02")
+
+[node name="Button_to_menu" type="Node3D" parent="." unique_id=677581545]
+transform = Transform3D(-2.1513749e-08, 0.4921772, 0.2221748, -0.54, -2.360415e-08, -1.2953125e-15, 9.7115676e-09, -0.2221748, 0.4921772, 0.092938185, -0.37786287, 0.72011644)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Button_to_menu" unique_id=1892980507]
+mesh = SubResource("BoxMesh_0bepo")
+
+[node name="Label3D" type="Label3D" parent="Button_to_menu" unique_id=1398465500]
+transform = Transform3D(-4.3711385e-08, -0.99999994, -4.3711385e-08, 0, -4.3711385e-08, 0.99999994, -0.9999999, 4.3711385e-08, 1.9106853e-15, 0, 0.080268204, 0)
+modulate = Color(0, 0, 0, 1)
+text = "Меню"
+font_size = 13
+outline_size = 0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Button_to_menu" unique_id=968696002]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.455, 0, 1, -1.9888683e-08, 0, 0.027617944, 0)
+mesh = SubResource("CapsuleMesh_1wb02")
+
+[node name="Area3D" type="Area3D" parent="Button_to_menu/MeshInstance3D2" unique_id=765645080]
+collision_layer = 7
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Button_to_menu/MeshInstance3D2/Area3D" unique_id=689499989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.004)
+shape = SubResource("CapsuleShape3D_niuj3")

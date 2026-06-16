@@ -44,7 +44,7 @@ func _ready():
 	# Включаем обработку для Area3D
 	_setup_area_signals()
 	
-	print("Меню готово к взаимодействию")
+	#print("Меню готово к взаимодействию")
 
 func _save_original_materials():
 	# Сохраняем оригинальные материалы для каждой кнопки
@@ -165,80 +165,80 @@ func _is_hand(node: Node) -> bool:
 
 func _on_send_body_entered(body: Node):
 	if _is_hand(body):
-		print("Рука вошла в зону кнопки Send")
+		#print("Рука вошла в зону кнопки Send")
 		is_send_hovered = true
 
 func _on_send_body_exited(body: Node):
 	if _is_hand(body):
-		print("Рука вышла из зоны кнопки Send")
+		#print("Рука вышла из зоны кнопки Send")
 		is_send_hovered = false
 
 func _on_send_area_entered(area: Area3D):
 	if _is_hand(area):
-		print("Область руки вошла в зону кнопки Send")
+		#print("Область руки вошла в зону кнопки Send")
 		is_send_hovered = true
 		_set_button_glow(button_send, Color(0, 0.686, 0), Color(0, 0.808, 0.259))  # 00af00 и 00ce42
 
 func _on_send_area_exited(area: Area3D):
 	if _is_hand(area):
-		print("Область руки вышла из зоны кнопки Send")
+		#print("Область руки вышла из зоны кнопки Send")
 		is_send_hovered = false
 		_reset_button_glow(button_send, original_send_material)
 
 func _on_send_button_activated():
-	print("Кнопка Send активирована. Переход на MAIN.tscn...")
+	#print("Кнопка Send активирована. Переход на MAIN.tscn...")
 	_change_scene("MAIN")
 
 func _on_lern_body_entered(body: Node):
 	if _is_hand(body):
-		print("Рука вошла в зону кнопки Lern")
+		#print("Рука вошла в зону кнопки Lern")
 		is_lern_hovered = true
 
 func _on_lern_body_exited(body: Node):
 	if _is_hand(body):
-		print("Рука вышла из зоны кнопки Lern")
+		#print("Рука вышла из зоны кнопки Lern")
 		is_lern_hovered = false
 
 func _on_lern_area_entered(area: Area3D):
 	if _is_hand(area):
-		print("Область руки вошла в зону кнопки Lern")
+		#print("Область руки вошла в зону кнопки Lern")
 		is_lern_hovered = true
 		_set_button_glow(button_lern, Color(0, 0.686, 0), Color(0, 0.808, 0.259))  # 00af00 и 00ce42
 
 func _on_lern_area_exited(area: Area3D):
 	if _is_hand(area):
-		print("Область руки вышла из зоны кнопки Lern")
+		#print("Область руки вышла из зоны кнопки Lern")
 		is_lern_hovered = false
 		_reset_button_glow(button_lern, original_lern_material)
 
 func _on_lern_button_activated():
-	print("Кнопка Lern активирована. Переход на MAIN_LEARN.tscn...")
+	#print("Кнопка Lern активирована. Переход на MAIN_LEARN.tscn...")
 	_change_scene("MAIN_LEARN")
 
 func _on_exit_body_entered(body: Node):
 	if _is_hand(body):
-		print("Рука вошла в зону кнопки Exit")
+		#print("Рука вошла в зону кнопки Exit")
 		is_exit_hovered = true
 
 func _on_exit_body_exited(body: Node):
 	if _is_hand(body):
-		print("Рука вышла из зоны кнопки Exit")
+		#print("Рука вышла из зоны кнопки Exit")
 		is_exit_hovered = false
 
 func _on_exit_area_entered(area: Area3D):
 	if _is_hand(area):
-		print("Область руки вошла в зону кнопки Exit")
+		#print("Область руки вошла в зону кнопки Exit")
 		is_exit_hovered = true
 		_set_button_glow(button_exit, Color(0, 0.686, 0), Color(0, 0.808, 0.259))  # 00af00 и 00ce42
 
 func _on_exit_area_exited(area: Area3D):
 	if _is_hand(area):
-		print("Область руки вышла из зоны кнопки Exit")
+		#print("Область руки вышла из зоны кнопки Exit")
 		is_exit_hovered = false
 		_reset_button_glow(button_exit, original_exit_material)
 
 func _on_exit_button_activated():
-	print("Кнопка Exit активирована. Выход из приложения...")
+	#print("Кнопка Exit активирована. Выход из приложения...")
 	if scene_manager:
 		get_tree().quit()
 	else:

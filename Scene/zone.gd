@@ -136,7 +136,7 @@ func _setup_button_signals():
 	if area_button:
 		area_button.area_entered.connect(_on_button_area_entered)
 		area_button.area_exited.connect(_on_button_area_exited)
-		print("Сигналы кнопки подключены")
+		#print("Сигналы кнопки подключены")
 	else:
 		print("area_button не найден")
 
@@ -145,7 +145,7 @@ func _setup_zone_signals():
 	# Подключаем сигналы для зоны проверки
 	if area_zone:
 		area_zone.area_entered.connect(_on_zone_area_entered)
-		print("Сигналы зоны подключены")
+		#print("Сигналы зоны подключены")
 	else:
 		print("area_zone не найден")
 
@@ -167,13 +167,13 @@ func _is_hand(node: Node) -> bool:
 func _delete_flag_with_molecule(flag_root: Node3D):
 	# Удаляем флаг со всеми дочерними узлами (атомами и связями)
 	if flag_root and is_instance_valid(flag_root):
-		print("Удаление флага с молекулой: ", flag_root.name)
+		#print("Удаление флага с молекулой: ", flag_root.name)
 		flag_root.queue_free()
 
 # Обработчик входа руки в зону кнопки (удаляем молекулу и переключаем задание)
 func _on_button_area_entered(area: Area3D):
 	if _is_hand(area) and task_completed:
-		print("Рука вошла в кнопку")
+		#print("Рука вошла в кнопку")
 		is_button_hovered = true
 		
 		# Удаляем текущую молекулу из сцены
@@ -201,13 +201,13 @@ func _on_button_area_entered(area: Area3D):
 # Обработчик выхода руки из зоны кнопки
 func _on_button_area_exited(area: Area3D):
 	if _is_hand(area):
-		print("Рука вышла из кнопки")
+		#print("Рука вышла из кнопки")
 		is_button_hovered = false
 
 # Обработчик входа флага в зону проверки и корректности молекулы
 func _on_zone_area_entered(area: Area3D):
 	if area.name.to_lower().contains("flag"):
-		print("Flag вошел в зону: ", area.name)
+		#print("Flag вошел в зону: ", area.name)
 		var flag_root = area.get_parent()
 		current_flag_root = flag_root  # Сохраняем ссылку на флаг в зоне
 		
@@ -235,7 +235,7 @@ func _on_zone_area_entered(area: Area3D):
 		
 		if main_node and main_node.has_method("check_molecule_structure"):
 			var is_correct = main_node.check_molecule_structure(flag_root, expected_structure)
-			print("Результат проверки задания ", current_task, ": ", is_correct)
+			#print("Результат проверки задания ", current_task, ": ", is_correct)
 			if is_correct:
 				if label_result:
 					label_result.text = "Задание выполнено!"

@@ -211,7 +211,7 @@ transform = Transform3D(1, -4.370344e-08, -4.2877584e-08, 4.370344e-08, 0.019075
 transform = Transform3D(1, -3.9963933e-08, -2.600348e-08, 3.9963943e-08, 0.40510973, 0.91426826, -2.6003505e-08, -0.91426826, 0.40510973, 0, -0.3499781, -1.1119254)
 
 [node name="Player" parent="." unique_id=1355984825 instance=ExtResource("2_ojrwd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06762385, 1.5856651, -4.92319)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06762385, 1.4856651, -4.92319)
 
 [node name="Shelfs2" parent="." unique_id=567405109 instance=ExtResource("4_4c5ek")]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -6.8130636, 2.229106, 7.705755)
