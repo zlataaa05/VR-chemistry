@@ -644,6 +644,7 @@ func _remove_bond_count(atom1: Node3D, atom2: Node3D):
 	atom_bond_count[atom2_id] = max(0, atom_bond_count.get(atom2_id, 0) - 1)
 
 func _update_all_links():
+	# Перебираем все атомы в сцене
 	for i in range(atoms.size()):
 		for j in range(i + 1, atoms.size()):
 			var atom1 = atoms[i]
@@ -654,25 +655,31 @@ func _update_all_links():
 			
 			var distance = atom1.global_position.distance_to(atom2.global_position)
 			var link_key = str(atom1.get_instance_id()) + "_" + str(atom2.get_instance_id())
-			
+			# Если расстояние меньше длины связи
 			if distance < link_length:
 				if not links.has(link_key):
+					# Проверка возможности связи
 					if _can_create_bond(atom1, atom2):
+						# Создаем связь
 						_create_link(atom1, atom2, link_key)
 			else:
+				# Иначе, если нет атомов или ключа связи
 				if links.has(link_key):
+					# Удаляем связь
 					_remove_link(link_key)
 					
 func _update_existing_links_transforms():
+	# Для всех связей
 	for link_key in links.keys():
 		var link_data = links[link_key]
-		
+		# Если не существует связи или атома
 		if not is_instance_valid(link_data["instance"]) or \
 		   not is_instance_valid(link_data["atom1"]) or \
 		   not is_instance_valid(link_data["atom2"]):
+			# Удаляем связь
 			_remove_link(link_key)
 			continue
-		
+		# Обновляем угол и масштаб связи
 		_update_link_transform(link_data["instance"], link_data["atom1"], link_data["atom2"])
 
 func _create_link(atom1: Node3D, atom2: Node3D, link_key: String):
@@ -762,25 +769,30 @@ func _remove_atom(atom: Node3D):
 	print("Атом удален")
 
 func _update_all_labels_rotation():
+	# Если нет камеры, то не выполняем
 	if not camera or not is_instance_valid(camera):
 		return
-	
+	# Сохраняем позицию камеры
 	var camera_position = camera.global_position
-	
+	# Проверяем все атомы
 	for atom in atoms:
 		if not is_instance_valid(atom):
 			continue
 		
 		var atom_id = atom.get_instance_id()
 		if atom_labels.has(atom_id):
+			# Сохраняем label атома
 			var label = atom_labels[atom_id]
 			if is_instance_valid(label):
 				if label.billboard != BaseMaterial3D.BILLBOARD_ENABLED:
+					# Вычисляем направление взгляда камеры
 					var direction_to_camera = (camera_position - label.global_position).normalized()
+					# Вычисляем направление обратное взгляду
 					var target_rotation = Quaternion(Vector3.BACK, direction_to_camera)
 					label.quaternion = target_rotation
 					var euler = label.rotation
 					euler.x = clamp(euler.x, -1.57, 1.57)
+					# Устанавливаем поворот label
 					label.rotation = euler
 
 

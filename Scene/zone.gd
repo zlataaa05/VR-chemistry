@@ -221,13 +221,13 @@ func _on_zone_area_entered(area: Area3D):
 				"bonds": [["H", "O"], ["H", "O"]]
 			}
 		elif current_task == 2:
-			# Zn(OH)2 - цинк связан с двумя группами OH
+			# Zn(OH)2
 			expected_structure = {
 				"atoms": ["Zn", "O", "H", "O", "H"],
 				"bonds": [["Zn", "O"], ["O", "H"], ["Zn", "O"], ["O", "H"]]
 			}
 		elif current_task == 3:
-			# H3BO3 - бор связан с тремя OH
+			# H3BO3
 			expected_structure = {
 				"atoms": ["B", "O", "H", "O", "H", "O", "H"],
 				"bonds": [["B", "O"], ["O", "H"], ["B", "O"], ["O", "H"], ["B", "O"], ["O", "H"]]

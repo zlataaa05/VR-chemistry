@@ -51,7 +51,7 @@ shape = SubResource("CylinderShape3D_javdl")
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=122470989]
 transform = Transform3D(1, 0, 0, 0, 1.3807006, 0, 0, 0, 1, 0, 0, 0)
 enabled = false
-target_position = Vector3(0, 3, 0)
+target_position = Vector3(0, 3.165, 0)
 collide_with_areas = true
 collide_with_bodies = false
 
